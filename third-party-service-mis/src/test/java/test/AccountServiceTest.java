@@ -3,7 +3,7 @@ package test;
 import com.cheyipai.platformservice.thirdparty.bean.Account;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
 import com.cheyipai.platformservice.thirdparty.service.AccountService;
-import com.cheyipai.platformservice.thirdparty.utils.json.MD5Util;
+import com.cheyipai.platformservice.thirdparty.utils.MD5Util;
 import org.junit.Assert;
 import org.junit.Test;
 

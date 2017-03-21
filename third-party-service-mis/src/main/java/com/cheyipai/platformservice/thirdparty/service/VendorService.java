@@ -4,7 +4,6 @@ import com.cheyipai.platformservice.thirdparty.bean.Vendor;
 import com.cheyipai.platformservice.thirdparty.commons.constants.BusinessStatusEnum;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
 import com.cheyipai.platformservice.thirdparty.mapper.VendorMapper;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,12 +22,9 @@ public class VendorService {
 
     public ResultMap insertVendor(Vendor vendor){
         ResultMap rm = new ResultMap(BusinessStatusEnum.FAIL);
-        if (null != vendor){
-            Gson gson = new Gson();
-            int i = vendorMapper.insertVendor(vendor);
-            if (i>0)
-                rm = new ResultMap(BusinessStatusEnum.SUCCESS);
-        }
+        int i = vendorMapper.insertVendor(vendor);
+        if (i>0)
+            rm = new ResultMap(BusinessStatusEnum.SUCCESS);
         return rm;
     }
 

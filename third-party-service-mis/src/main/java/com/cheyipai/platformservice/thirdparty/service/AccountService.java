@@ -4,7 +4,7 @@ import com.cheyipai.platformservice.thirdparty.bean.Account;
 import com.cheyipai.platformservice.thirdparty.commons.constants.BusinessStatusEnum;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
 import com.cheyipai.platformservice.thirdparty.mapper.AccountMapper;
-import com.cheyipai.platformservice.thirdparty.utils.json.MD5Util;
+import com.cheyipai.platformservice.thirdparty.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

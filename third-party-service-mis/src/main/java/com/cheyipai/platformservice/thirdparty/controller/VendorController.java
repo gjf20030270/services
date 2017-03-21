@@ -4,7 +4,7 @@ import com.cheyipai.platformservice.thirdparty.bean.Vendor;
 import com.cheyipai.platformservice.thirdparty.commons.constants.ApiUrls;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
 import com.cheyipai.platformservice.thirdparty.service.VendorService;
-import com.cheyipai.platformservice.thirdparty.utils.json.JsonMapper;
+import com.cheyipai.platformservice.thirdparty.utils.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

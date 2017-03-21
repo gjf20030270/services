@@ -1,4 +1,4 @@
-package com.cheyipai.platformservice.thirdparty.mapper;
+package com.cheyipai.platformservice.thirdparty.dao.mapper;
 
 import com.cheyipai.platformservice.thirdparty.bean.Vendor;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.cheyipai.platformservice.thirdparty.utils.json;
+package com.cheyipai.platformservice.thirdparty.utils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
