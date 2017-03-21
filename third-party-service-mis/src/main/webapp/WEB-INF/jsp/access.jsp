@@ -11,13 +11,13 @@
 <body>
 <div class="container" id="access">
     <div class="alert alert-success" role="alert"></div>
-    <div id="accountToolbar" class="btn-group">
+    <div id="accessToolbar" class="btn-group">
         <button type="button" class="btn btn-default" id="query">
             <i class="glyphicon">访问统计</i>
         </button>
     </div>
     <!-- table list-->
-    <table id="accessTable" data-toolbar="#accountToolbar"data-height="550" data-show-toggle="true" data-show-columns="true" data-striped="true"></table>
+    <table id="accessTable" data-toolbar="#accessToolbar"data-height="550" data-show-toggle="true" data-show-columns="true" data-striped="true"></table>
     <!-- edit modal-->
     <div id="queryTotalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
