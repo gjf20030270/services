@@ -22,7 +22,21 @@
 	</resultMap>
 
 	<select id="selectAccess"  resultMap="resultMap">
-		select * from pt_access a,pt_access_detail ad
+		select 	a.id,
+				a.channel,
+				a.app_key,
+				a.busi_code,
+				a.vendor_code,
+				a.identify_code,
+				a.third_identify_id,
+				a.create_time,
+				a.update_time,
+				a.callback_time,
+				a.status,
+				ad.request_param,
+				ad.third_request_param,
+				ad.respon_result,
+		 CONVERT(ad.third_respon_result USING utf8) thiry_respon_result from pt_access a,pt_access_detail ad
 		where a.id=ad.pt_access_id order by a.create_time
 	</select>
 
