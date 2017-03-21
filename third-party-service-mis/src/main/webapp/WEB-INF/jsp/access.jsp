@@ -137,9 +137,9 @@
         $('#accessTable').bootstrapTable('hideColumn', 'responResult');
         $('#accessTable').bootstrapTable('hideColumn', 'thirdResponResult');
     });
-    $("#access").find(".keep-open").on(){
-
-    }
+//    $("#access").find(".keep-open").on(){
+//
+//    }
 </script>
 </body>
 </html>
