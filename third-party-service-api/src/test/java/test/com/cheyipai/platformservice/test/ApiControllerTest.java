@@ -30,14 +30,14 @@ public class ApiControllerTest extends BaseBeanTest{
         String channel = "pc";
         String businessCode = "query";
 
-        params.add(new BasicNameValuePair("serviceType","WZ"));
-        params.add(new BasicNameValuePair("city","SH"));
-        params.add(new BasicNameValuePair("hphm","浙AZ238U"));
-        params.add(new BasicNameValuePair("appKey",appKey));
+        params.add(new BasicNameValuePair("service_type","WZ"));
+        params.add(new BasicNameValuePair("city","北京"));
+        params.add(new BasicNameValuePair("hphm","京BZ3378"));
+        params.add(new BasicNameValuePair("app_key",appKey));
 
-        params.add(new BasicNameValuePair("timeStamp",""+timeStamp));
+        params.add(new BasicNameValuePair("time_stamp",""+timeStamp));
         params.add(new BasicNameValuePair("channel",channel));
-        params.add(new BasicNameValuePair("businessCode",businessCode));
+        params.add(new BasicNameValuePair("business_code",businessCode));
         params.add(new BasicNameValuePair("engineno","61C1A5555"));
 
 
@@ -61,7 +61,7 @@ public class ApiControllerTest extends BaseBeanTest{
         System.out.println("src="+src);
         params.add(new BasicNameValuePair("sign", sign));
 
-        HttpUriRequest request = HttpClientFactory.customHttpClient().buildHttpUriRequest("http://localhost:8080/api/v1","GET",params,3000);
+        HttpUriRequest request = HttpClientFactory.customHttpClient().buildHttpUriRequest("http://localhost:8080/api/v1","POST",params,3000);
         CustomHttpClient.HttpResult result = HttpClientFactory.customHttpClient().sendRequestGetEntityBytes(request);
         System.out.println(result.getContent());
 

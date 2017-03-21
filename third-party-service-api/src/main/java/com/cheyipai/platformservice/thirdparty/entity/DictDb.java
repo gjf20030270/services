@@ -10,7 +10,7 @@ public class DictDb {
     private String code;
     private String serviceType;
     private String businessType;
-    private String data;
+    private byte[] data;
     private Date createTime;
     private Date updateTime;
     private String remark;
@@ -48,11 +48,11 @@ public class DictDb {
         this.businessType = businessType;
     }
 
-    public String getData() {
+    public byte[] getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(byte[] data) {
         this.data = data;
     }
 

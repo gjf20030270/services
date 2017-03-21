@@ -15,6 +15,7 @@ public class AccessDb {
     private String identifyCode;
     private String thirdIdentifyId;
     private Date createTime;
+    private Date updateTime;
     private Date callbackTime;
     private int status;
 
@@ -96,5 +97,13 @@ public class AccessDb {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
