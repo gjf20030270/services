@@ -6,10 +6,6 @@ import com.cheyipai.platformservice.thirdparty.utils.ExceptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.PriorityBlockingQueue;
-
 /**
  * Created by gongjunfeng on 2017/3/20.
  */
@@ -63,9 +59,9 @@ public class CacheManager {
     }
 
     public static void main(String[] args) {
-        ArrayBlockingQueue queue;
+        /*ArrayBlockingQueue queue;
         ConcurrentLinkedQueue linkedQueue;
-        PriorityBlockingQueue priorityBlockingQueue;
+        PriorityBlockingQueue priorityBlockingQueue;*/
     }
 
 }

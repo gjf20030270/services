@@ -26,7 +26,7 @@ public class ApiController extends AbstractController {
 
     private DictManager dictManager;
 
-    @RequestMapping(value = "/api/v1", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/v1", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ResultMap execute(HttpServletRequest request) {
 
