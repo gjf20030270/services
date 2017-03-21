@@ -13,6 +13,9 @@
 <script src="/static/js/ie/html5shiv.min.js"></script>
 <script src="/static/js/ie/respond.min.js"></script>
 <![endif]-->
+<script src="/static/js/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/static/js/bootstrap/bootstrap.min.js"></script>
+<script src="/static/js/AdminLTE/app.min.js"></script>
 
 <script src="/static/js/bootstrap/bootstrap-table-zh-CN.js" type="text/javascript" charset="UTF-8"></script>
 <script src="/static/js/bootstrap/bootstrap-table.js" type="text/javascript" charset="UTF-8"></script>

@@ -9,11 +9,24 @@
 </head>
 <body>
 <div class="container" id="access">
+    <table id="total"></table>
     <div class="alert alert-success" role="alert"></div>
     <!-- table list-->
     <table id="accessTable" data-height="550" data-show-toggle="true" data-show-columns="true" data-striped="true"></table>
 </div>
 <script type="text/javascript">
+    //初始统计列表数据
+    $('#total').bootstrapTable({
+        showRefresh: true, // 开启刷新功能
+        url: '/access/accesstotal.json',
+        columns: [{
+            field: 'channel',
+            title: '渠道'
+        }, {
+            field: 'id',
+            title: '调用次数'
+        }]
+    });
     //初始化列表数据
     $('#accessTable').bootstrapTable({
         pagination: true, //开启分页
