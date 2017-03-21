@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheyipai.platformservice.thirdparty.mapper.AccessMapper">
+	<resultMap id="resultMap" type="com.cheyipai.platformservice.thirdparty.bean.Access">
+		<result column="id" property="id"/>
+		<result column="channel" property="channel"/>
+		<result column="app_key" property="appKey"/>
+		<result column="busi_code" property="busiCode"/>
+		<result column="vendor_code" property="vendorCode"/>
+		<result column="identify_code" property="identifyCode"/>
+		<result column="third_identify_id" property="thirdIdentifyId"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="callback_time" property="callbackTime"/>
+		<result column="status" property="status"/>
+
+		<result column="request_param" property="requestParam"/>
+		<result column="third_request_param" property="thirdRequestParam"/>
+		<result column="respon_result" property="responResult"/>
+		<result column="thiry_respon_result" property="thiryResponResult"/>
+	</resultMap>
+
+	<select id="selectAccess"  resultMap="resultMap">
+		select * from pt_access a,pt_access_detail ad
+		where a.id=ad.pt_access_id order by a.create_time
+	</select>
+</mapper>

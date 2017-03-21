@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd"
+       default-autowire="byName">
+
+    <util:properties id="properties" location="classpath:config/jdbc.properties"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="initialSize" value="2"/>
+        <property name="minIdle" value="5"/>
+        <property name="maxIdle" value="10"/>
+        <property name="maxActive" value="20"/>
+        <property name="maxWait" value="1000"/>
+        <property name="logAbandoned" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="180"/>
+        <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+        <property name="minEvictableIdleTimeMillis" value="3600000"/>
+        <property name="driverClassName" value="#{properties['jdbc.driver']}"/>
+        <property name="url" value="#{properties['jdbc.read.url']}"/>
+        <property name="username" value="#{properties['jdbc.read.username']}"/>
+        <property name="password" value="#{properties['jdbc.read.password']}"/>
+        <property name="defaultAutoCommit" value="true"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:config/mybatis-config.xml"/>
+        <property name="typeAliasesPackage" value="com.cheyipai.platformservice.thirdparty.entity"/>
+        <property name="mapperLocations" value="classpath:config/mapper/**/*.xml"/>
+    </bean>
+
+    <!-- 注:此bean必须设置 lazy-init="false"-->
+    <bean class="com.cheyipai.platformservice.thirdparty.utils.SpringUtils" lazy-init="false"/>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cheyipai.platformservice.thirdparty.mapper"/>
+    </bean>
+</beans>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cheyipai.platformservice.thirdparty.mapper.DictMapper">
+
+    <resultMap type="DictDb" id="DictResultMap">
+        <id property="id" column="id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="code" column="code"/>
+        <result property="businessType" column="busi_type"/>
+        <result property="data" column="data"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    <sql id="columns" >
+        id,code,service_type,busi_type,data,create_time,update_time,remark,status
+    </sql>
+    <select id="getDictById" resultMap="DictResultMap">
+        SELECT <include refid="columns" />
+        FROM
+        pt_dict
+        WHERE id = #{id} and status = 1
+    </select>
+    <select id="getDicts" resultMap="DictResultMap">
+        SELECT <include refid="columns" />
+        FROM
+        pt_dict
+        <where>
+            status = 1
+            <if test="serviceType !=null and serviceType != ''">
+                and service_type = #{serviceType}
+            </if>
+            <if test="code !=null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="businessType !=null and businessType != ''">
+                and busi_type = #{businessType}
+            </if>
+        </where>
+    </select>
+    <insert id="addDict" parameterType="DictDb" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pt_dict (
+        code,service_type,busi_type,data,create_time,update_time,remark,status
+        )
+        VALUES (
+        #{code},
+        #{serviceType},
+        #{businessType},
+        #{data},
+        #{createTime},
+        #{updateTime},
+        #{remark},
+        #{status}
+        )
+    </insert>
+    <update id="updateDict" parameterType="DictDb">
+        update pt_dict
+        <set>
+            <if test="data != null and data!=''">
+                data=#{data},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time=#{updateTime},
+            </if>
+            <if test="remark != null and remark!=''">
+                remark=#{remark},
+            </if>
+        </set>
+        where code = #{code} and service_type = #{serviceType} and busi_type = #{businessType}
+    </update>
+</mapper>
+
+

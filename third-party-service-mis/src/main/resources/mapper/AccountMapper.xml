@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheyipai.platformservice.thirdparty.mapper.AccountMapper">
+	<resultMap id="resultMap" type="com.cheyipai.platformservice.thirdparty.bean.Account">
+		<result column="id" property="id"/>
+		<result column="app_key" property="appKey"/>
+		<result column="app_secret" property="appSecret"/>
+		<result column="name" property="name"/>
+		<result column="description" property="description"/>
+		<result column="state" property="state"/>
+		<result column="busi_code" property="busiCode"></result>
+		<result column="channel" property="channel"></result>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+
+	<insert id="insertAccount" parameterType="com.cheyipai.platformservice.thirdparty.bean.Account" useGeneratedKeys="true" keyProperty="id">
+		insert into pt_account (app_key,app_secret,name,description,state,create_time,update_time,busi_code,channel)
+		values(#{appKey},#{appSecret},#{name},#{description},#{state},SYSDATE(),SYSDATE(),#{busiCode},#{channel})
+	</insert>
+
+	<update id="updateAccount" parameterType="com.cheyipai.platformservice.thirdparty.bean.Account">
+		update pt_account
+		<set>
+			<if test="name != null and name != ''" >
+				name = #{name},
+			</if>
+			<if test="description != null and description != ''" >
+				description = #{description},
+			</if>
+			<if test="state != null and state != ''" >
+				state = #{state},
+			</if>
+			update_time = SYSDATE(),
+			<if test="busiCode != null and busiCode != ''" >
+				busi_code = #{busiCode},
+			</if>
+			<if test="channel != null and channel != ''" >
+				channel = #{channel},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<select id="selectAccount"  resultMap="resultMap">
+		select * from pt_account order by create_time
+	</select>
+
+	<delete id="deleteAccount" parameterType="java.lang.String">
+		delete from pt_account where id=#{id}
+	</delete>
+</mapper>

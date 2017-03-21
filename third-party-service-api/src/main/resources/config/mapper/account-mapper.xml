@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cheyipai.platformservice.thirdparty.mapper.AccountMapper">
+
+    <resultMap type="AccountDb" id="AccountResultMap">
+        <id property="id" column="id"/>
+        <result property="appKey" column="app_key"/>
+        <result property="appSecret" column="app_secret"/>
+        <result property="channel" column="channel"/>
+        <result property="businessCode" column="busi_code"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="state" column="state"/>
+    </resultMap>
+
+    <sql id="columns" >
+        id,app_key,app_secret,channel,busi_code,name,description,create_time,update_time,state
+    </sql>
+    <select id="getAccountByAppkey" resultMap="AccountResultMap">
+        SELECT <include refid="columns" />
+        FROM
+        pt_account
+        WHERE state = 1 and app_key = #{appKey} and channel = #{channel} and busi_code = #{businessCode} limit 1
+    </select>
+
+</mapper>
+
+

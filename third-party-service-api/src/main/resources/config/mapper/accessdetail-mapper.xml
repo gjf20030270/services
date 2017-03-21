@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cheyipai.platformservice.thirdparty.mapper.AccessDetailMapper">
+
+    <resultMap type="AccessDetailDb" id="AccessDetailResultMap">
+        <id property="id" column="id"/>
+        <result property="accessId" column="pt_access_id"/>
+        <result property="requestParam" column="request_param"/>
+        <result property="thirdRequestParam" column="third_request_param"/>
+        <result property="responseResult" column="respon_result"/>
+        <result property="thirdResponseResult" column="third_respon_result"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <select id="getAccessDetails" resultMap="AccessDetailResultMap">
+        SELECT
+        id,pt_access_id,request_param,third_request_param,respon_result,third_respon_result,create_time,update_time
+        FROM
+        pt_access_detail
+    </select>
+
+    <select id="getAccessDetailByAccessId" resultMap="AccessDetailResultMap">
+        SELECT
+        id,pt_access_id,request_param,third_request_param,respon_result,third_respon_result,create_time,update_time
+        FROM
+        pt_access_detail
+        WHERE pt_access_id = #{accessId}
+    </select>
+
+    <insert id="addAccessDetail" parameterType="AccessDetailDb" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pt_access_detail (
+        pt_access_id,request_param,third_request_param,respon_result,third_respon_result,create_time,update_time
+        )
+        VALUES (
+        #{accessId},#{requestParam},#{thirdRequestParam},#{responseResult},#{thirdResponseResult},#{createTime},#{updateTime}
+        )
+    </insert>
+
+</mapper>
+
+

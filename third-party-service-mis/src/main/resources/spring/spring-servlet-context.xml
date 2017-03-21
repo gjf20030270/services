@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+
+       <mvc:resources location="/hc/" mapping="/hc/**" />
+       <mvc:resources location="/static/" mapping="/static/**" />
+
+       <context:component-scan base-package="com.cheyipai.platformservice.thirdparty.controller" use-default-filters="false">
+           <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
+           <context:include-filter expression="org.springframework.web.bind.annotation.ControllerAdvice" type="annotation" />
+       </context:component-scan>
+
+       <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+              <property name="messageConverters">
+                     <list>
+                            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+                            <bean class="org.springframework.http.converter.FormHttpMessageConverter" />
+                            <bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
+                            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+                            <bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+                     </list>
+              </property>
+       </bean>
+
+       <mvc:annotation-driven />
+
+       <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+              <!--<property name="mediaTypes">
+                     <map>
+                            <entry key="html" value="text/html" />
+                            <entry key="json" value="application/json" />
+                            <entry key="xml" value="application/xml" />
+                            <entry key="excel" value="application/excel" />
+                     </map>
+              </property>-->
+              <property name="viewResolvers">
+                     <list>
+                            <!-- view resolver会顺序查找 -->
+                            <bean id="jspViewResolver"
+                                  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                                   <property name="viewClass"
+                                             value="org.springframework.web.servlet.view.JstlView" />
+                                   <property name="prefix" value="/WEB-INF/jsp/" />
+                                   <property name="suffix" value=".jsp" />
+                            </bean>
+                     </list>
+              </property>
+              <property name="defaultViews">
+                     <list>
+                            <!-- 输出为JSON数据 -->
+                            <bean
+                                    class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                            </bean>
+
+                     </list>
+              </property>
+       </bean>
+
+       <!-- file upload -->
+       <bean id="multipartResolver"
+             class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+              <description>
+                     <![CDATA[
+		1. 上传大小默认30M
+		2. 内存大小为4M
+	    ]]>
+              </description>
+              <property name="maxUploadSize" value="31457280" />
+              <property name="maxInMemorySize" value="4096" />
+              <!--<property name="uploadTempDir" ref="uploadDirResource" /> -->
+       </bean>
+    <mvc:interceptors>
+    <mvc:interceptor>
+    <mvc:mapping path="/**" />
+    <bean class="com.cheyipai.platformservice.thirdparty.core.interceptor.AuthInterceptor"/>
+    </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
