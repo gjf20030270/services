@@ -36,7 +36,7 @@
 				ad.request_param,
 				ad.third_request_param,
 				ad.respon_result,
-		 CONVERT(GROUP_CONCAT(ad.third_respon_result) USING utf8) thiry_respon_result from pt_access a,pt_access_detail ad
+		 CONVERT(ad.third_respon_result USING utf8) thiry_respon_result from pt_access a,pt_access_detail ad
 		where a.id=ad.pt_access_id order by a.create_time
 	</select>
 
