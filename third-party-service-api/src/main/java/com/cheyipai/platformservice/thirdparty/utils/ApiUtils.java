@@ -133,5 +133,14 @@ public class ApiUtils {
         }
         return false;
     }
+    public final static boolean isExpiredTimeSecond(Date date,int amount){
+        Date nowTime = new Date();
+        Date addedTime = DateUtils.addSeconds(date, amount);
+        int cmp = DateUtils.truncatedCompareTo(addedTime, nowTime, Calendar.SECOND);
+        if (cmp < 0) {
+            return true;
+        }
+        return false;
+    }
 
 }

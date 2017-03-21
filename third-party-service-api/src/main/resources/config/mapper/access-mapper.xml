@@ -13,22 +13,26 @@
         <result property="identifyCode" column="identify_code"/>
         <result property="thirdIdentifyId" column="third_identify_id"/>
         <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
         <result property="callbackTime" column="callback_time"/>
         <result property="status" column="status"/>
     </resultMap>
 
 
+    <sql id="columns" >
+        id,channel,app_key,busi_code,vendor_code,identify_code,third_identify_id,create_time,update_time,callback_time,status
+    </sql>
     <select id="getAccesses" resultMap="AccessResultMap">
-        SELECT id,
-        channel,app_key,busi_code,vendor_code,identify_code,third_identify_id,create_time,callback_time,status
+        SELECT
+        <include refid="columns"/>
         FROM
         pt_access
         WHERE status = 1
     </select>
 
     <select id="getAccessByIdentifyCode" resultMap="AccessResultMap">
-        SELECT id,
-        channel,app_key,busi_code,vendor_code,identify_code,third_identify_id,create_time,callback_time,status
+        SELECT
+        <include refid="columns"/>
         FROM
         pt_access
         WHERE status = 1 and identify_code = #{identifyCode} order by create_time desc limit 1
@@ -37,10 +41,10 @@
 
     <insert id="addAccess" parameterType="AccessDb" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pt_access (
-        channel,app_key,busi_code,vendor_code,identify_code,third_identify_id,create_time,callback_time,status
+        channel,app_key,busi_code,vendor_code,identify_code,third_identify_id,create_time,update_time,callback_time,status
         )
         VALUES (
-        #{channel},#{appKey},#{businessCode},#{vendorCode},#{identifyCode},#{thirdIdentifyId},#{createTime},
+        #{channel},#{appKey},#{businessCode},#{vendorCode},#{identifyCode},#{thirdIdentifyId},#{createTime},#{updateTime},
         #{callbackTime},#{status}
         )
     </insert>

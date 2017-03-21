@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,11 +22,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DictManager {
 
     private final static Logger LOG = LoggerFactory.getLogger(DictManager.class);
+
+    private static int expired_time = 24 * 60 * 60;
     /**
      * http://v.juhe.cn/wz/citys?key=fcded50227e14b8192f21f14b8c7e6f3
      */
     private static final String JUHECITYS_URI = "juhecitysUri";
     private static final String JUHE_KEY = "juheKey";
+
     private static Map<String,JuheCityResult.JuheCity> juheCitys = new ConcurrentHashMap<>();
 
     static{
@@ -54,8 +58,18 @@ public class DictManager {
                 updateTime = dict.getCreateTime();
             }
             if(updateTime!=null){
-                boolean isExpired = ApiUtils.isExpiredTimeSecond(updateTime.getTime(),24 * 60 * 60);
+                boolean isExpired = ApiUtils.isExpiredTimeSecond(updateTime.getTime(),expired_time);
                 if(!isExpired){
+                    String content = null;
+                    byte[] data = dict.getData();
+                    if(data != null && data.length>0){
+                        try {
+                            content = new String(data,"UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            LOG.error(ExceptionUtil.getExceptionTraceInfo(e));
+                        }
+                    }
+                    parseJuheCitys(content);
                     return;
                 }
             }
@@ -83,12 +97,15 @@ public class DictManager {
     }
 
     private static int saveOrUpdate(String content){
+        if(StringUtils.isBlank(content)){
+            content = "";
+        }
         DictDb dict = selectWzCity();
         if(dict==null){
             return saveWzCity(content);
         }else{
             dict.setUpdateTime(new Date());
-            dict.setData(content);
+            dict.setData(content.getBytes());
             return updateWzCity(dict);
         }
     }
@@ -113,7 +130,7 @@ public class DictManager {
         dict.setBusinessType( Constants.JUHE_BUSINESS_TYPE_CITY);
         dict.setCode(Constants.SERVICE_VENDOR_JUHE);
         dict.setCreateTime(new Date());
-        dict.setData(content);
+        dict.setData(content.getBytes());
         dict.setStatus(1);
         dict.setRemark("聚合违章城市列表");
         return DBUtil.getInstance().addDict(dict);
@@ -136,4 +153,8 @@ public class DictManager {
             }
         }
     }
+    public static Map<String,JuheCityResult.JuheCity> getJuheCitys(){
+        return juheCitys;
+    }
+
 }

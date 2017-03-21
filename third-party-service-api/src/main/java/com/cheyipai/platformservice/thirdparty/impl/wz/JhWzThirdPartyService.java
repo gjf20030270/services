@@ -7,9 +7,10 @@ import com.cheyipai.platformservice.thirdparty.bean.ProcessResult;
 import com.cheyipai.platformservice.thirdparty.bean.RequestServiceConfig;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
 import com.cheyipai.platformservice.thirdparty.entity.AccessDb;
-import com.cheyipai.platformservice.thirdparty.entity.DictDb;
 import com.cheyipai.platformservice.thirdparty.entity.ServiceVendorDb;
+import com.cheyipai.platformservice.thirdparty.impl.DictManager;
 import com.cheyipai.platformservice.thirdparty.impl.WzThirdPartyService;
+import com.cheyipai.platformservice.thirdparty.utils.ApiUtils;
 import com.cheyipai.platformservice.thirdparty.utils.DBUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
@@ -18,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +78,7 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("dtype",DTYPE));
         String city = requestConfigMap.get("city");
-        city = getCityValue(city);
+        city = DictManager.getCityCode(city);
         nameValuePairs.add(new BasicNameValuePair("city",city));
         nameValuePairs.add(new BasicNameValuePair("hphm",requestConfigMap.get("hphm")));//号牌号码
         nameValuePairs.add(new BasicNameValuePair("hpzl",HPZL));
@@ -85,24 +86,6 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
         nameValuePairs.add(new BasicNameValuePair("classno",requestConfigMap.get("classno")));//车架号
         nameValuePairs.add(new BasicNameValuePair("key",this.getRequestServiceConfig().getAppKey()));
         return nameValuePairs;
-    }
-
-    private String getCityValue(String city) {
-        if(StringUtils.isBlank(city)){
-            return "";
-        }
-        Map<String,String > queryParams = new HashMap<>();
-        queryParams.put("type","wz_city");
-        queryParams.put("code",city);
-        List<DictDb> dicts = DBUtil.getInstance().getDicts(queryParams);
-        if( dicts.size() > 0 ){
-            DictDb dict = dicts.get(0);
-            city = "";//dict.getValue();
-        }
-        if(dicts.size() != 1 ){
-            LOG.error("type={},code={},query size = {},should 1 result.","wz_city",city,dicts.size());
-        }
-        return city;
     }
 
     /**
@@ -123,7 +106,17 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
             return false;
         }
         AccessDb accessDb = DBUtil.getInstance().getAccessByIdentifyCode(identigyCode);
-
-        return accessDb == null ? false : true;
+        if(accessDb == null){
+            return false;
+        }
+        Date updateTime = accessDb.getUpdateTime();
+        if(updateTime == null ){
+            updateTime = accessDb.getCreateTime();
+        }
+        if(updateTime!=null){
+            boolean isExpired = ApiUtils.isExpiredTimeSecond(updateTime, this.getRequestServiceConfig().getCacheTime());
+            return (!isExpired);
+        }
+        return false;
     }
 }

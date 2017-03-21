@@ -2,7 +2,9 @@ package com.cheyipai.platformservice.thirdparty.controller;
 
 import com.cheyipai.platformservice.thirdparty.ThirdPartyServiceManager;
 import com.cheyipai.platformservice.thirdparty.bean.BusinessStatusEnum;
+import com.cheyipai.platformservice.thirdparty.bean.JuheCityResult;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
+import com.cheyipai.platformservice.thirdparty.impl.DictManager;
 import com.cheyipai.platformservice.thirdparty.utils.ExceptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,9 @@ public class ApiController extends AbstractController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ApiController.class);
 
-    @RequestMapping(value = "/api/v1", method = RequestMethod.GET)
+    private DictManager dictManager;
+
+    @RequestMapping(value = "/api/v1", method = RequestMethod.POST)
     @ResponseBody
     public ResultMap execute(HttpServletRequest request) {
 
@@ -41,6 +45,22 @@ public class ApiController extends AbstractController {
             LOG.error(ExceptionUtil.getExceptionTraceInfo(e));
             return ResultMap.getResultMap(BusinessStatusEnum.FAIL);
         }
+
+    }
+    @RequestMapping(value = "/api/juheCity", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultMap reloadJuheCitys(HttpServletRequest request) {
+
+        ResultMap success = ResultMap.getResultMap(BusinessStatusEnum.SUCCESS);
+        try{
+            DictManager.loadCitys();
+            Map<String,JuheCityResult.JuheCity> juheCityMap = DictManager.getJuheCitys();
+            success.setData(juheCityMap);
+        }catch(Exception e){
+            LOG.error(ExceptionUtil.getExceptionTraceInfo(e));
+            return ResultMap.getResultMap(BusinessStatusEnum.FAIL);
+        }
+        return success;
 
     }
 }

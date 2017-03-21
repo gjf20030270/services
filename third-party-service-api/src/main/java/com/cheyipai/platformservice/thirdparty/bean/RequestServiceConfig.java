@@ -10,6 +10,14 @@ public class RequestServiceConfig {
     private String requestMethod;
     private String vendorName;
 
+    private int requestTimeOut;
+    private int level;
+    private String appKey;
+
+    private String vendorCode;
+    private String serviceType;
+    private int cacheTime;
+
     public String getVendorName() {
         return vendorName;
     }
@@ -17,13 +25,6 @@ public class RequestServiceConfig {
     public void setVendorName(String vendorName) {
         this.vendorName = vendorName;
     }
-
-    private int requestTimeOut;
-    private int level;
-    private String appKey;
-
-    private String vendorCode;
-    private String serviceType;
 
     public String getServiceType() {
         return serviceType;
@@ -81,6 +82,14 @@ public class RequestServiceConfig {
         this.appKey = appKey;
     }
 
+    public int getCacheTime() {
+        return cacheTime;
+    }
+
+    public void setCacheTime(int cacheTime) {
+        this.cacheTime = cacheTime;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("RequestServiceConfig{");
@@ -90,6 +99,7 @@ public class RequestServiceConfig {
         sb.append(", vendorName='").append(vendorName).append('\'');
         sb.append(", requestTimeOut=").append(requestTimeOut);
         sb.append(", level=").append(level);
+        sb.append(", cacheTime=").append(cacheTime);
         sb.append(", vendorCode='").append(vendorCode).append('\'');
         sb.append(", serviceType='").append(serviceType).append('\'');
         sb.append('}');
