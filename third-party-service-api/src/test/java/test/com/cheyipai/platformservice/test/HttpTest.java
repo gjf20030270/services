@@ -1,13 +1,8 @@
 package test.com.cheyipai.platformservice.test;
 
-import com.cheyipai.platformservice.thirdparty.ThirdPartyService;
-import com.cheyipai.platformservice.thirdparty.bean.Chain;
-import com.cheyipai.platformservice.thirdparty.entity.ServiceVendorDb;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

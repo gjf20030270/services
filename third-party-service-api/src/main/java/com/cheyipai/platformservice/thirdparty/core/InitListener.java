@@ -1,6 +1,7 @@
 package com.cheyipai.platformservice.thirdparty.core;
 
 import com.cheyipai.platformservice.thirdparty.impl.ThirdPartyServiceCacheImpl;
+import com.mysql.jdbc.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -11,6 +12,7 @@ import javax.servlet.ServletContextListener;
 
 /**
  * add by jiamingku 2017-03-09
+ * 加载数据库记录构造缓存对象
  */
 public class InitListener implements ServletContextListener, Runnable {
 
@@ -66,6 +68,8 @@ public class InitListener implements ServletContextListener, Runnable {
                 long end = System.currentTimeMillis();
                 LOG.info("项目启动初始化结束,共耗时:" + (end - begin) + "毫秒!");
             } catch (Exception e) {
+                e.printStackTrace();
+                LOG.info("项目启动发生异常," + e.getMessage());
             }
             try {
                 Thread.sleep(SLEEP_TIME);

@@ -48,8 +48,9 @@ public abstract class AbstractController {
         AccountDb accountDb = DBUtil.getInstance().getAccountByAppKey(appKey,channel,businessCode);
         if(accountDb != null){
             appSecret = accountDb.getAppSecret();
-        }else
+        }else {
             return false;
+        }
         return secureMD5(map, Long.valueOf(timeStamp), appSecret, sign);
     }
 
