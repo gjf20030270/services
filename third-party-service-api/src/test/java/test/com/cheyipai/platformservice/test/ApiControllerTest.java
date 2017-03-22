@@ -2,9 +2,12 @@ package test.com.cheyipai.platformservice.test;
 
 import com.cheyipai.platformservice.thirdparty.entity.AccountDb;
 import com.cheyipai.platformservice.thirdparty.utils.ApiUtils;
+import com.cheyipai.platformservice.thirdparty.utils.CustomHttpClient;
 import com.cheyipai.platformservice.thirdparty.utils.DBUtil;
+import com.cheyipai.platformservice.thirdparty.utils.HttpClientFactory;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.Test;
 
@@ -64,9 +67,9 @@ public class ApiControllerTest extends BaseBeanTest{
         params.add(new BasicNameValuePair("sign", sign));
 
 
-        /*HttpUriRequest request = HttpClientFactory.customHttpClient().buildHttpUriRequest("http://localhost:8080/api/v1","GET",params,3000);
+        HttpUriRequest request = HttpClientFactory.customHttpClient().buildHttpUriRequest("http://localhost:8080/api/v1","GET",params,3000);
         CustomHttpClient.HttpResult result = HttpClientFactory.customHttpClient().sendRequestGetEntityBytes(request);
-        System.out.println(result.getContent());*/
+        System.out.println("dddd"+result.getContent());
 
     }
 }

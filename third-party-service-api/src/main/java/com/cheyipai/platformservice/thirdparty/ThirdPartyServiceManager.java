@@ -31,7 +31,7 @@ public class ThirdPartyServiceManager {
                 (requestConfigMap.get(Constants.SERVICE_TYPE));
 
         if (thirdPartyServiceChain == null) {
-            return ret;
+            return ResultMap.getResultMap(BusinessStatusEnum.SERVICE_NOT_EXISTS);
         }
 
         thirdPartyServiceChain.excuteService(requestConfigMap, ret);

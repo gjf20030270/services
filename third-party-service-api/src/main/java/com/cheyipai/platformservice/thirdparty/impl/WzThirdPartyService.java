@@ -126,7 +126,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         accessDb.setChannel(requestConfigMap.get(Constants.CHANNEL));
         accessDb.setCreateTime(new Date());
         accessDb.setIdentifyCode(buildIdentifyCode(requestConfigMap));
-        if(resultMap.getResultCode().equals(BusinessStatusEnum.SUCCESS)){
+        if(resultMap.getResultCode().equals(BusinessStatusEnum.SUCCESS.getResultCode())){
             accessDb.setStatus(1);// 1有效 0 无效
         }else{
             accessDb.setStatus(0);

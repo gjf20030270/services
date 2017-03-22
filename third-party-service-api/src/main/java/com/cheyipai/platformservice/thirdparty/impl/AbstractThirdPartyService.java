@@ -172,6 +172,7 @@ public abstract class AbstractThirdPartyService implements ThirdPartyService {
             requestServiceConfig.setRequestTimeOut(Integer.valueOf(serviceVendorDb.getRequestTimeOut()));
             requestServiceConfig.setRequestMethod(serviceVendorDb.getRequestMethod());
             requestServiceConfig.setVendorName(serviceVendorDb.getName());
+            requestServiceConfig.setCacheTime(Integer.valueOf(serviceVendorDb.getCacheTime()));
         }
 
         return requestServiceConfig;

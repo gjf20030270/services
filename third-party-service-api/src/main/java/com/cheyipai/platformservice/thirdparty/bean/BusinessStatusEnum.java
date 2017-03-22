@@ -13,6 +13,7 @@ public enum BusinessStatusEnum {
     //成功与失败的key-value , key长度为1
     SUCCESS("1", "操作成功"),
     FAIL("0", "发生错误"),
+    SERVICE_NOT_EXISTS("2", "服务不存在"),
 
 
     PARAM_EMPTY("10001", "输入参数为空"),
