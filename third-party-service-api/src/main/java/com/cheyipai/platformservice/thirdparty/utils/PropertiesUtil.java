@@ -4,14 +4,14 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
-	private static String filename = "/config/jdbc.properties";
+	private static String filename = "/config/sysconfig.properties";
 	private static Properties pro = new Properties();
 	static {
 		try {
 			pro.load(PropertiesUtil.class.getResourceAsStream(filename));
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Load jdbc.properties “"+filename+"” file error.");
+			System.out.println("Load sysconfig.properties “"+filename+"” file error.");
 		}
 	}
 
