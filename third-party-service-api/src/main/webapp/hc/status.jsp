@@ -43,6 +43,7 @@
         sb.append("<tr>");
         sb.append("<td style='word-wrap:break-word'>供应商Id</td>");
         sb.append("<td style='word-wrap:break-word'>供应商code</td>");
+        sb.append("<td style='word-wrap:break-word'>供应商level</td>");
         sb.append("<td style='word-wrap:break-word'>供应商名称</td>");
         sb.append("<td style='word-wrap:break-word'>供应商service-type</td>");
         sb.append("<td style=\"word-wrap:break-word\">创建时间</td>");
@@ -66,6 +67,7 @@
             sb.append("<tr>");
             sb.append("<td style='word-wrap:break-word'>" + serviceVendorDb.getId() + "</td>");
             sb.append("<td style='word-wrap:break-word'>" + serviceVendorDb.getCode() + "</td>");
+            sb.append("<td style='word-wrap:break-word'>" + serviceVendorDb.getLevel() + "</td>");
             sb.append("<td style='word-wrap:break-word'>" + serviceVendorDb.getName() + "</td>");
             sb.append("<td style='word-wrap:break-word'>" + serviceVendorDb.getServiceType() + "</td>");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
