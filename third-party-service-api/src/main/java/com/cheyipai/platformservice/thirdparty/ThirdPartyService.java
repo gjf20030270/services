@@ -3,6 +3,7 @@ package com.cheyipai.platformservice.thirdparty;
 import com.cheyipai.platformservice.thirdparty.bean.ProcessResult;
 import com.cheyipai.platformservice.thirdparty.bean.RequestServiceConfig;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
+import com.cheyipai.platformservice.thirdparty.entity.ServiceVendorDb;
 
 import java.util.List;
 import java.util.Map;
@@ -19,5 +20,8 @@ public interface ThirdPartyService {
     boolean isExists(String key);
 
     String getServiceType();
+
+    ServiceVendorDb getServiceVendorDb();
+
 
 }

@@ -1,7 +1,14 @@
 package test.com.cheyipai.platformservice.test;
 
+import com.cheyipai.platformservice.thirdparty.ThirdPartyService;
+import com.cheyipai.platformservice.thirdparty.bean.Chain;
+import com.cheyipai.platformservice.thirdparty.entity.ServiceVendorDb;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +49,38 @@ public class HttpTest {
 
 
         System.out.println(Thread.currentThread().getName()+" running");
+
+
+        HashMap<String, String> map = new HashMap();
+
+        for(Map.Entry<String,String> entry:map.entrySet()) {
+
+        }
+
     }
+
+//    public String getChainTableData(Map<String, Chain> map ) {
+//        StringBuilder sb = new StringBuilder();
+//        List<ServiceVendorDb> serviceVendorDbs = new ArrayList<>();
+//        for (Map.Entry<String, Chain> entry :map.entrySet()) {
+//            sb.append("<tr>");
+//            sb.append("<td style='word-wrap:break-word'>" + entry.getKey()+ "</td>");
+//            sb.append("<td style='word-wrap:break-word'>");
+//
+//            for(ThirdPartyService thirdPartyService :entry.getValue().getChainElements()) {
+//                thirdPartyService.getServiceVendorDb();
+//                serviceVendorDbs.add(thirdPartyService.getServiceVendorDb());
+//            }
+//            String a = getVendorDataTable(serviceVendorDbs);
+//            sb.append(a);
+//            sb.append("</td>");
+//            sb.append("</tr>");
+//        }
+//
+//        return sb.toString();
+//    }
+
+
 
     public static void main(String[] args) throws InterruptedException {
 

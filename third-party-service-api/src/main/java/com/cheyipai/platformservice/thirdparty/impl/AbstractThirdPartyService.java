@@ -146,7 +146,7 @@ public abstract class AbstractThirdPartyService implements ThirdPartyService {
         return false;
     }
 
-
+    @Override
     public ServiceVendorDb getServiceVendorDb() {
         return serviceVendorDb;
     }
