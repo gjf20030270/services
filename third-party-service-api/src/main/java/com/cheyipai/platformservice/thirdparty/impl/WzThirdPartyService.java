@@ -77,7 +77,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
             }
         }
         //2
-        AccessDb accessDb = doSaveAccessDb(requestConfigMap);
+        AccessDb accessDb = doSaveAccessDb(requestConfigMap,ret);
         //3
         AccessDetailDb detailDb = saveAccessDetailDb(requestConfigMap, ret, thirdResponse, accessDb);
         //4
@@ -118,15 +118,19 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
     public String toString() {
         return this.getRequestServiceConfig().toString();
     }
-    private AccessDb doSaveAccessDb(Map<String, String> requestConfigMap){
+    private AccessDb doSaveAccessDb(Map<String, String> requestConfigMap,ResultMap resultMap){
         AccessDb accessDb = new AccessDb();
-        accessDb.setStatus(1);
         accessDb.setAppKey(requestConfigMap.get(Constants.APP_KEY));
         accessDb.setVendorCode(this.getServiceVendorDb().getCode());
         accessDb.setBusinessCode(requestConfigMap.get(Constants.BUSINESS_CODE));
         accessDb.setChannel(requestConfigMap.get(Constants.CHANNEL));
         accessDb.setCreateTime(new Date());
         accessDb.setIdentifyCode(buildIdentifyCode(requestConfigMap));
+        if(resultMap.getResultCode().equals(BusinessStatusEnum.SUCCESS)){
+            accessDb.setStatus(1);// 1有效 0 无效
+        }else{
+            accessDb.setStatus(0);
+        }
         DBUtil.getInstance().addAccess(accessDb);
         return accessDb;
     }
@@ -145,7 +149,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         detailDb.setThirdRequestParam(thirdParamJson);
         detailDb.setThirdResponseResult(thirdResponseResult);
         detailDb.setCreateTime(new Date());
-        Object o = ret.get("data");
+        Object o = ret.getData();
         if(o instanceof  String){
             detailDb.setResponseResult((String)o);
         }
@@ -169,8 +173,8 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         }
         AccessDb accessDb = DBUtil.getInstance().getAccessByIdentifyCode(identifyCode);
         AccessDetailDb accessDetailDb = DBUtil.getInstance().getAccessDetailByAccessId(accessDb.getId());
-        resultMap.setCode(BusinessStatusEnum.SUCCESS.getResultCode());
-        resultMap.setMessage(BusinessStatusEnum.SUCCESS.getStateDescription());
+        resultMap.setResultCode(BusinessStatusEnum.SUCCESS.getResultCode());
+        resultMap.setStateDescription(BusinessStatusEnum.SUCCESS.getStateDescription());
         String responseResult = accessDetailDb.getResponseResult();
         if(StringUtils.isNotBlank(responseResult)){
             resultMap.setData(responseResult);

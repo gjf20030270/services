@@ -24,15 +24,13 @@ public class ApiController extends AbstractController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ApiController.class);
 
-    private DictManager dictManager;
-
     @RequestMapping(value = "/api/v1", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ResultMap execute(HttpServletRequest request) {
 
         try{
             ResultMap result = checkParams(request);
-            if(!BusinessStatusEnum.SUCCESS.getResultCode().equals(result.get("resCode"))){
+            if(!BusinessStatusEnum.SUCCESS.getResultCode().equals(result.getResultCode())){
                 return result;
             }
             boolean isSecured = secureMD5(request);

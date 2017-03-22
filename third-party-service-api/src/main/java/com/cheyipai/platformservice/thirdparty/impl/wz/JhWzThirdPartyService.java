@@ -54,12 +54,12 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
         JSONObject jsonObject = JSON.parseObject(json);
         String resultcode = jsonObject.getString("resultcode");
         if(SUCCESS_CODE.equals(resultcode)){
-            resultMap.setCode(BusinessStatusEnum.SUCCESS.getResultCode());
-            resultMap.setMessage(BusinessStatusEnum.SUCCESS.getStateDescription());
+            resultMap.setResultCode(BusinessStatusEnum.SUCCESS.getResultCode());
+            resultMap.setStateDescription(BusinessStatusEnum.SUCCESS.getStateDescription());
             resultMap.setData(jsonObject.getJSONObject("result"));
         }else{
-            resultMap.setCode(BusinessStatusEnum.FAIL.getResultCode());
-            resultMap.setMessage(BusinessStatusEnum.FAIL.getStateDescription());
+            resultMap.setResultCode(BusinessStatusEnum.FAIL.getResultCode());
+            resultMap.setStateDescription(BusinessStatusEnum.FAIL.getStateDescription());
             resultMap.setData(jsonObject.getString("reason"));
         }
     }

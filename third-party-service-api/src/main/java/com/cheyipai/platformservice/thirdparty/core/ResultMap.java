@@ -10,24 +10,24 @@ import java.util.HashMap;
  */
 public class ResultMap extends HashMap<String, Object> {
 
-    private final String KEY_ERROR_CODE = "resCode";
-    private final String KEY_MESSAGE = "msg";
-    private final String KEY_DATAS = "data";
+    private final String KEY_RESULT_CODE = "resultCode";
+    private final String KEY_STATE_DESCRIPTION = "StateDescription";
+    private final String KEY_DATA = "data";
 
     public ResultMap(String errorCode, String msg) {
-        this.put(KEY_ERROR_CODE, errorCode);
-        this.put(KEY_MESSAGE, msg);
+        this.put(KEY_RESULT_CODE, errorCode);
+        this.put(KEY_STATE_DESCRIPTION, msg);
     }
 
     public ResultMap(Integer errorCode, String msg) {
-        this.put(KEY_ERROR_CODE, errorCode);
-        this.put(KEY_MESSAGE, msg);
+        this.put(KEY_RESULT_CODE, errorCode);
+        this.put(KEY_STATE_DESCRIPTION, msg);
     }
 
     public ResultMap(BusinessStatusEnum status) {
-        this.put(KEY_ERROR_CODE, status.getResultCode());
-        this.put(KEY_MESSAGE, status.getStateDescription());
-        this.put(KEY_DATAS, null);
+        this.put(KEY_RESULT_CODE, status.getResultCode());
+        this.put(KEY_STATE_DESCRIPTION, status.getStateDescription());
+        this.put(KEY_DATA, null);
     }
     public ResultMap() {
     }
@@ -37,15 +37,24 @@ public class ResultMap extends HashMap<String, Object> {
         return rm;
     }
 
+    public String getResultCode(){
+        return (String)this.get(KEY_RESULT_CODE);
+    }
+    public String getStateDescription(){
+        return (String)this.get(KEY_STATE_DESCRIPTION);
+    }
+    public Object getData(){
+        return this.get(KEY_DATA);
+    }
     public void setData(Object data) {
-        this.put(KEY_DATAS, data);
+        this.put(KEY_DATA, data);
     }
 
-    public void setCode(String code){
-        this.put(KEY_ERROR_CODE, code);
+    public void setResultCode(String code){
+        this.put(KEY_RESULT_CODE, code);
     }
 
-    public void setMessage(String msg){
-        this.put(KEY_MESSAGE, msg);
+    public void setStateDescription(String msg){
+        this.put(KEY_STATE_DESCRIPTION, msg);
     }
 }
