@@ -20,30 +20,28 @@ public class ThirdPartyServiceManager {
     }
 
     /**
-     * @param requestConfigMap
+     * 1.根据请求参数中的service_type获取链条
+     * 2.执行链条
+     * 3.返回结果
+     * @param requestParmaMap
      * @return
      */
-    public ResultMap getThirdPartyServiceResult(Map<String, String> requestConfigMap) {
+    public ResultMap getThirdPartyServiceResult(Map<String, String> requestParmaMap) {
 
         ResultMap ret = ResultMap.getResultMap(BusinessStatusEnum.FAIL);
-        // 1. 根据请求参数获取对应的服务
+        // 1.
         Chain thirdPartyServiceChain = ThirdPartyServiceUtil.getThirdPartyServiceChainByServiceType
-                (requestConfigMap.get(Constants.SERVICE_TYPE));
-
+                (requestParmaMap.get(Constants.SERVICE_TYPE));
         if (thirdPartyServiceChain == null) {
             return ResultMap.getResultMap(BusinessStatusEnum.SERVICE_NOT_EXISTS);
         }
-
-        thirdPartyServiceChain.excuteService(requestConfigMap, ret);
-
-        // 2.执行 数据
-
+        // 2.
+        thirdPartyServiceChain.excuteService(requestParmaMap, ret);
+        // 3.
         return ret;
-
     }
 
     private static class LazyHolder {
         private static final ThirdPartyServiceManager INSTANCE = new ThirdPartyServiceManager();
     }
-
 }

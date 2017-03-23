@@ -29,21 +29,24 @@ public class ApiController extends AbstractController {
     public ResultMap execute(HttpServletRequest request) {
 
         try{
+            // 1.
             ResultMap result = checkParams(request);
             if(!BusinessStatusEnum.SUCCESS.getResultCode().equals(result.getResultCode())){
                 return result;
             }
+            // 1.1
             boolean isSecured = secureMD5(request);
             if (!isSecured) {
                 return ResultMap.getResultMap(BusinessStatusEnum.SECURE_ERROR);
             }
+            // 2.
             Map<String, String> map = populateParamMap(request);
+            // 3.
             return ThirdPartyServiceManager.getInstance().getThirdPartyServiceResult(map);
         }catch(Exception e){
             LOG.error(ExceptionUtil.getExceptionTraceInfo(e));
             return ResultMap.getResultMap(BusinessStatusEnum.FAIL);
         }
-
     }
     @RequestMapping(value = "/api/juheCity", method = RequestMethod.GET)
     @ResponseBody

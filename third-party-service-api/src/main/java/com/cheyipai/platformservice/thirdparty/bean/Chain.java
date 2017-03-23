@@ -27,22 +27,22 @@ public class Chain {
         this.chainElements.add(thirdPartyService);
     }
 
+    /**
+     * @param requestParamMap
+     * @param ret
+     */
+    public void excuteService(Map<String, String> requestParamMap , ResultMap ret) {
 
-    public void excuteService(Map<String, String> requestConfigMap , ResultMap ret) {
-
-        if (null == requestConfigMap || requestConfigMap.size() == 0) {
+        if (null == requestParamMap || requestParamMap.size() == 0) {
             return;
         }
-
         for (ThirdPartyService thirdPartyService: chainElements) {
 
-            ProcessResult processResult = thirdPartyService.excuteService(requestConfigMap, ret);
+            ProcessResult processResult = thirdPartyService.excuteService(requestParamMap, ret);
 
             if (processResult == ProcessResult.STOP) {
                 break;
             }
         }
-
     }
-
 }

@@ -27,7 +27,7 @@ public class ResultMap extends HashMap<String, Object> {
     public ResultMap(BusinessStatusEnum status) {
         this.put(KEY_RESULT_CODE, status.getResultCode());
         this.put(KEY_STATE_DESCRIPTION, status.getStateDescription());
-        this.put(KEY_DATA, null);
+        this.put(KEY_DATA, new Object());
     }
     public ResultMap() {
     }
