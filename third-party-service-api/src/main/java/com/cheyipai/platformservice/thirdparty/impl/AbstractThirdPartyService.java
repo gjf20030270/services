@@ -141,11 +141,6 @@ public abstract class AbstractThirdPartyService implements ThirdPartyService {
     }
 
     @Override
-    public boolean isExists(String key) {
-        return false;
-    }
-
-    @Override
     public ServiceVendorDb getServiceVendorDb() {
         return serviceVendorDb;
     }

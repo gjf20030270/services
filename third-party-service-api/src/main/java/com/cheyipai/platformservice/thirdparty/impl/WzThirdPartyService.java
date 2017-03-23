@@ -54,6 +54,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         long execTime = 0;
         //1
         String identifyCode = getIdenfyCode(requestConfigMap);
+
         if (isExists(identifyCode)) {
             assembleResultMap(identifyCode,ret);
         } else {
@@ -134,6 +135,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         DBUtil.getInstance().addAccess(accessDb);
         return accessDb;
     }
+
     protected String buildIdentifyCode(Map<String, String> requestConfigMap){
         String identify;
         Map<String, String> m = requestConfigMap;
@@ -167,6 +169,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         }
         return idCode;
     }
+
     private void assembleResultMap(String identifyCode ,ResultMap resultMap){
         if(resultMap == null){
             resultMap = new ResultMap();
