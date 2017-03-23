@@ -75,7 +75,6 @@ public abstract class AbstractController {
 
         StringBuilder builder = new StringBuilder();
         builder.append(sec).append(src).append(sec);
-        System.out.println(builder.toString());
         String md5Sign = DigestUtils.md5Hex(builder.toString());
         LOG.info("入参sign={}，md5后sign={}", sign, md5Sign);
 
