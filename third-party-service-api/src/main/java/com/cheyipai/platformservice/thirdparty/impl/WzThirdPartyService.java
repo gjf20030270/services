@@ -51,6 +51,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
 
         ProcessResult result = ProcessResult.STOP;
         String thirdResponse = null;
+        String thirdRequest = null;
         long execTime = 0;
         //1
         String identifyCode = getIdenfyCode(requestConfigMap);
@@ -65,7 +66,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
                         requestConfigMap);
                 CustomHttpClient.HttpResult httpResult = HttpClientFactory.customHttpClient().
                         sendRequestGetEntityBytes(httpUriRequest);
-
+                thirdRequest = buildThirdParam(requestConfigMap);
                 thirdResponse = httpResult.getContent();
                 stopWatch.stop();
                 execTime = stopWatch.getTime();
@@ -80,7 +81,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         //2
         AccessDb accessDb = doSaveAccessDb(requestConfigMap,ret);
         //3
-        AccessDetailDb detailDb = saveAccessDetailDb(requestConfigMap, ret, thirdResponse, accessDb);
+        AccessDetailDb detailDb = saveAccessDetailDb(requestConfigMap, ret,thirdRequest, thirdResponse, accessDb);
         //4
         doLog(execTime, detailDb);
         return result;
@@ -98,23 +99,21 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         LOG.info(model.toString());
     }
 
-    private AccessDetailDb saveAccessDetailDb(Map<String, String> requestConfigMap, ResultMap ret, String thirdResponse, AccessDb accessDb) {
-        String reqParamJson;
-        List<NameValuePair> thirdParamList;
-        Map<String,String> thirdParamMap = new HashMap<>();
+    private AccessDetailDb saveAccessDetailDb(Map<String, String> requestConfigMap, ResultMap ret, String thirdParamJson,String thirdResponse, AccessDb accessDb) {
         Map<String,String> sortedMap;
-        String thirdParamJson;
-
         sortedMap = ApiUtils.sortMapByKey(requestConfigMap);
-        reqParamJson = JSON.toJSONString(sortedMap);
-        thirdParamList = buildHttpUriRequestParam(this.getRequestServiceConfig(),requestConfigMap);
-        for(NameValuePair pair : thirdParamList ){
-            thirdParamMap.put(pair.getName(),pair.getValue());
-        }
-        thirdParamJson = JSON.toJSONString(thirdParamMap);
+        String reqParamJson = JSON.toJSONString(sortedMap);
         return doSaveAccessDetailDb(reqParamJson,thirdParamJson,accessDb.getId(), thirdResponse, ret);
     }
 
+    private String buildThirdParam(Map<String,String> requestMap){
+        List<NameValuePair> thirdParamList = buildHttpUriRequestParam(this.getRequestServiceConfig(),requestMap);
+        Map<String,String> thirdParamMap = new HashMap<>();
+        for(NameValuePair pair : thirdParamList ){
+            thirdParamMap.put(pair.getName(),pair.getValue());
+        }
+        return JSON.toJSONString(thirdParamMap);
+    }
     @Override
     public String toString() {
         return this.getRequestServiceConfig().toString();
@@ -171,17 +170,20 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
     }
 
     private void assembleResultMap(String identifyCode ,ResultMap resultMap){
-        if(resultMap == null){
-            resultMap = new ResultMap();
-        }
-        AccessDb accessDb = DBUtil.getInstance().getAccessByIdentifyCode(identifyCode);
-        AccessDetailDb accessDetailDb = DBUtil.getInstance().getAccessDetailByAccessId(accessDb.getId());
         resultMap.setResultCode(BusinessStatusEnum.SUCCESS.getResultCode());
         resultMap.setStateDescription(BusinessStatusEnum.SUCCESS.getStateDescription());
-        String responseResult = accessDetailDb.getResponseResult();
-        if(StringUtils.isNotBlank(responseResult)){
-            resultMap.setData(responseResult);
+        AccessDb accessDb = DBUtil.getInstance().getAccessByIdentifyCode(identifyCode);
+
+        if(accessDb!=null){
+            AccessDetailDb accessDetailDb = DBUtil.getInstance().getAccessDetailByAccessId(accessDb.getId());
+            if(accessDetailDb!=null){
+                String responseResult = accessDetailDb.getResponseResult();
+                if(StringUtils.isNotBlank(responseResult)){
+                    resultMap.setData(responseResult);
+                }
+            }
         }
+
     }
 
 }
