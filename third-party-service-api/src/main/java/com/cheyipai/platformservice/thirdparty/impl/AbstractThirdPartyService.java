@@ -46,7 +46,6 @@ public abstract class AbstractThirdPartyService implements ThirdPartyService {
             // 2.
             buildRequestServiceConfig(_serviceVendorDb);
         } catch (Exception e) {
-            e.printStackTrace();
             LOG.error("解析服务提供商服务规则失败,原因:" + e.getMessage() + " " + _serviceVendorDb);
         }
 
@@ -169,10 +168,13 @@ public abstract class AbstractThirdPartyService implements ThirdPartyService {
             requestServiceConfig.setLevel(serviceVendorDb.getLevel());
             requestServiceConfig.setAppKey(serviceVendorDb.getAppKey());
             requestServiceConfig.setRequestMethod(serviceVendorDb.getRequestMethod());
-            requestServiceConfig.setRequestTimeOut(Integer.valueOf(serviceVendorDb.getRequestTimeOut()));
+            String requestTimeOut = serviceVendorDb.getRequestTimeOut() == null ? "0" : serviceVendorDb
+                    .getRequestTimeOut();
+            requestServiceConfig.setRequestTimeOut(Integer.valueOf(requestTimeOut));
             requestServiceConfig.setRequestMethod(serviceVendorDb.getRequestMethod());
             requestServiceConfig.setVendorName(serviceVendorDb.getName());
-            requestServiceConfig.setCacheTime(Integer.valueOf(serviceVendorDb.getCacheTime()));
+            String cacheTime = serviceVendorDb.getCacheTime() == null ? "0" : serviceVendorDb.getCacheTime();
+            requestServiceConfig.setCacheTime(Integer.valueOf(cacheTime));
         }
 
         return requestServiceConfig;
