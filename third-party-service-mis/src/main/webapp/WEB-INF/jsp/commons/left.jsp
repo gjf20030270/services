@@ -12,7 +12,8 @@
             url:url,
             type:"GET",
             success:function(data){
-                var tab = $('<li class=""><a href="#tab_'+tabId+'" data-toggle="tab">'+tabName+'<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button></a></li>');
+//                var tab = $('<li class=""><a href="#tab_'+tabId+'" data-toggle="tab">'+tabName+'<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button></a></li>');
+                var tab = $('<li class=""><a href="#tab_'+tabId+'" data-toggle="tab">'+tabName+'</a></li>');
                 $("#myTab").append(tab);
                 var tabContent = $('<div class="tab-pane" id="tab_'+tabId+'"></div>');
                 tabContent.append(data);
@@ -20,8 +21,11 @@
                 $("#myTab li:last a").tab('show');
             }
         });
-
     }
+//    function remove(tabId){
+//        $('#tab_'+tabId+'').tab('hide');
+//
+//    }
 </script>
 <aside class="main-sidebar">
     <section class="sidebar">

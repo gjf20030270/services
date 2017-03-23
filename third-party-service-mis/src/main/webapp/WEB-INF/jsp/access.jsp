@@ -10,136 +10,116 @@
 </head>
 <body>
 <div class="container" id="access">
-    <div class="alert alert-success" role="alert"></div>
-    <div id="accessToolbar" class="btn-group">
-        <button type="button" class="btn btn-default" id="query">
-            <i class="glyphicon">访问统计</i>
-        </button>
-    </div>
+    <div style="padding-top: 30px;" >
+    <table id="query"class="table table-striped table-bordered table-hover" align="center">
+        <tr> <td>访问渠道：</td><td><input id="channel" type="text" /></td>
+            <td>appKey：</td><td COLSPAN="3"><input id="appKey" type="text" style="width: 100%;"/></td>
+        </tr>
+        <tr>
+            <td>业务代码：</td><td><input id="busiCode" name="customerName4" type="text" /></td>
+            <td>服务商编码：</td><td><input id="vendorCode" name="customerName4" type="text" /></td>
+            <td>服务唯一码：</td><td><input id="identifyCode" name="identifyCode" type="text" /></td>
+        </tr>
+        <tr>
+            <td>回调时间：</td><td><input id="callbackTime" name="callbackTime" type="text" /></td>
+            <td>调用否有效:</td>
+            <td colspan="2"><input id="statusY" name="status" type="radio" value=1 /> 有效
+                <input id="statusN" name="status" type="radio" value=0 /> 无效</td>
+            <td ><button id="search" type="button" style="padding-right: -1px;">查询</button></td>
+        </tr>
+    </table>
     <!-- table list-->
-    <table id="accessTable" data-toolbar="#accessToolbar"data-height="550" data-show-toggle="true" data-show-columns="true" data-striped="true"></table>
-    <!-- edit modal-->
-    <div id="queryTotalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">访问统计</h4>
-                </div>
-                <div class="modal-body" >
-                        <table class="table table-striped table-bordered table-hover">
-                            <tr>
-                                <th>调用渠道</td>
-                                <th>调用次数</td>
-                            </tr>
-                            <tbody id="datas">
-                            </tbody>
-                        </table>
-                </div>
-            </div>
-        </div>
+    <div style="padding-top: 30px;" >
+    <table id="accessTable" data-height="550"data-show-columns="false" data-striped="true">
+
+    </table>
     </div>
 
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#query").on('click', function () {
-            $("#queryTotalModal").modal('show');
-            $.ajax({
-                type: "POST",
-                url: "/access/accesstotal.json",
-                async: true,
-                dataType: "json",
-                success: function (data) {
-                    data = JSON.parse(data);
-                    if (data.resCode == 1) {
-                        var str = "";
-                        for(var i=0;i < data.data.length;i++){
-                            str= $('<tr><td>'+data.data[i].canal+'</td><td>'+data.data[i].total+'</td></tr>');
-                        }
-                        $("#datas").append(str);
-                    }
-                }
-            });
-        });
-//        $(".close").on('click', function () {
-//            $("input[type=reset]").trigger("click");
-//        });
+    $(function () {
+        tableInit();
+        $("#search").bind("click", tableInit);
     });
-    //初始化列表数据
-    $('#accessTable').bootstrapTable({
-        pagination: true, //开启分页
-        search: true,
-        pagination:true,
-        showRefresh: true, // 开启刷新功能
-//        sortOrder: "id asc",
-        url: '/access/accessInfo.json',
 
-        columns: [{
-            field: 'id',
-            title: '主键',
-            sortable: true
-        }, {
-            field: 'channel',
-            title: '渠道',
-            sortable: true
-        }, {
-            field: 'appKey',
-            title: 'appKey',
-            sortable: true
-        }, {
-            field: 'busiCode',
-            title: '业务代码',
-            sortable: true
-        }, {
-            field: 'vendorCode',
-            title: '服务商编码',
-            sortable: true
-        }, {
-            field: 'identifyCode',
-            title: '服务的唯一码',
-            sortable: true
-        },{
-            field: 'thirdIdentifyId',
-            title: '服务回调唯一标志',
-            sortable: true
-        },{
-            field: 'callbackTime',
-            title: '回调时间',
-            sortable: true
-        },{
-            field: 'requestParam',
-            title: '请求参数'
-        },{
-            field: 'thirdRequestParam',
-            title: '第三方请求参数'
-        },{
-            field: 'responResult',
-            title: '响应结果'
-        },{
-            field: 'thirdResponResult',
-            title: '第三方响应结果'
-        },{
-            field: 'status',
-            title: '状态',
-            formatter: function (value, row, index) {
-                if (value == 1)  return '有效';
-                else return '无效';
-            },
-            sortable: true
-        }]
-    });
-    //隐藏部分列
-    $(function(){
-        $('#accessTable').bootstrapTable('hideColumn', 'id');
-        $('#accessTable').bootstrapTable('hideColumn', 'requestParam');
-        $('#accessTable').bootstrapTable('hideColumn', 'thirdRequestParam');
-        $('#accessTable').bootstrapTable('hideColumn', 'responResult');
-        $('#accessTable').bootstrapTable('hideColumn', 'thirdResponResult');
-    });
-//    $("#access").find(".keep-open").on(){
-//
-//    }
+
+    function tableInit(){
+        $('#accessTable').bootstrapTable('destroy');
+        $('#accessTable').bootstrapTable({
+            url: '/access/accessInfo.json',         //请求后台的URL（*）
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+//            sortable: false,                     //是否启用排序
+//            sortOrder: "asc",                   //排序方式
+            queryParams: function queryParams(params) {
+                var param = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+//                    limit: params.limit,   //页面大小
+//                    offset: params.offset,  //页码
+                    channel: $("#channel").val(),
+                    appKey: $("#appKey").val(),
+                    busiCode: $("#busiCode").val(),
+                    vendorCode: $("#vendorCode").val(),
+                    callbackTime: $("#callbackTime").val(),
+//                    maxrows: params.limit,
+//                    pageindex: params.pageNumber,
+                    status: $('input:radio[name="status"]:checked').val()
+                };
+                return param;
+            },//传递参数（*）
+//            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+//            pageNumber:1,                       //初始化加载第一页，默认第一页
+//            pageSize: 50,                       //每页的记录行数（*）
+//            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+//            strictSearch: true,
+//            cardView: false,                    //是否显示详细视图
+//            detailView: false,                   //是否显示父子表
+            columns: [{
+                field: 'id',
+                title: '序号'
+            }, {
+                field: 'channel',
+                title: '渠道'
+            }, {
+                field: 'appKey',
+                title: 'appKey'
+            }, {
+                field: 'busiCode',
+                title: '业务代码'
+            }, {
+                field: 'vendorCode',
+                title: '服务商编码'
+            }, {
+                field: 'identifyCode',
+                title: '服务的唯一码'
+            },{
+                field: 'thirdIdentifyId',
+                title: '服务回调唯一标志'
+            },{
+                field: 'callbackTime',
+                title: '回调时间'
+            },{
+                field: 'requestParam',
+                title: '请求参数'
+            },{
+                field: 'thirdRequestParam',
+                title: '第三方请求参数'
+            },{
+                field: 'responResult',
+                title: '响应结果'
+            },{
+                field: 'thirdResponResult',
+                title: '第三方响应结果'
+            },{
+                field: 'status',
+                title: '状态',
+                formatter: function (value, row, index) {
+                    if (value == 1)  return '有效';
+                    else return '无效';
+                }
+            }]
+        });
+    }
+
 </script>
 </body>
 </html>

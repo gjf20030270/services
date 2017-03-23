@@ -39,7 +39,7 @@ public class AccountController {
     }
     @ResponseBody
     @RequestMapping(value = "/optAccount",method = {RequestMethod.GET, RequestMethod.POST})
-    public String insertVendor(Account account,HttpServletRequest request){
+    public String insertAccount(Account account,HttpServletRequest request){
         JsonMapper jm = JsonMapper.buildNormalBinder();
         ResultMap rm = null;
         String id = account.getId().toString();

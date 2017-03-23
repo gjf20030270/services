@@ -21,7 +21,7 @@
   </style>
 <body>
 <div class="container" id="vendor">
-    <div class="alert alert-success" role="alert"></div>
+    <div style="padding-top: 30px;" >
      <!-- toolbar-->
     <div id="vendorToolbar" class="btn-group">
         <button type="button" class="btn btn-default" id="saveVendor">
@@ -30,7 +30,7 @@
      </div>
 
     <!-- table list-->
-    <table id="vendorTable" data-toolbar="#vendorToolbar" data-height="550" data-show-toggle="true" data-show-columns="true" data-striped="true"></table>
+    <table id="vendorTable" data-toolbar="#vendorToolbar" data-height="550" data-show-toggle="true" data-show-columns="false" data-striped="true"></table>
 
     <!-- edit modal-->
     <div id="editVendorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -278,22 +278,21 @@
     //隐藏部分列
     $(function(){
         $('#vendorTable').bootstrapTable('hideColumn', 'id');
-        $('#vendorTable').bootstrapTable('hideColumn', 'reqparamMap');
-        $('#vendorTable').bootstrapTable('hideColumn', 'requestUrl');
-        $('#vendorTable').bootstrapTable('hideColumn', 'createTime');
-        $('#vendorTable').bootstrapTable('hideColumn', 'updateTime');
-        $('#vendorTable').bootstrapTable('hideColumn', 'requestTimeOut');
-        $('#vendorTable').bootstrapTable('hideColumn', 'companyPhone');
-        $('#vendorTable').bootstrapTable('hideColumn', 'contactsPhone');
-        $('#vendorTable').bootstrapTable('hideColumn', 'notifyType');
-        $('#vendorTable').bootstrapTable('hideColumn', 'callbackUrl');
-        $('#vendorTable').bootstrapTable('hideColumn', 'companyPhone');
-        $('#vendorTable').bootstrapTable('hideColumn', 'contactsPhone');
-        $('#vendorTable').bootstrapTable('hideColumn', 'remark');
-        $('#vendorTable').bootstrapTable('hideColumn', 'serviceStartTime');
-        $('#vendorTable').bootstrapTable('hideColumn', 'serviceStopTime');
-        $('#vendorTable').bootstrapTable('hideColumn', 'cacheTime');
-
+//        $('#vendorTable').bootstrapTable('hideColumn', 'reqparamMap');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'requestUrl');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'createTime');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'updateTime');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'requestTimeOut');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'companyPhone');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'contactsPhone');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'notifyType');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'callbackUrl');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'companyPhone');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'contactsPhone');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'remark');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'serviceStartTime');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'serviceStopTime');
+//        $('#vendorTable').bootstrapTable('hideColumn', 'cacheTime');
     });
     //初始化修改数据
     function initEditDate(row){

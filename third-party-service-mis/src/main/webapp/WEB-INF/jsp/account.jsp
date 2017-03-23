@@ -18,7 +18,7 @@
   </style>
 <body>
 <div class="container" id="account">
-    <div class="alert alert-success" role="alert"></div>
+    <div style="padding-top: 30px;" >
      <!-- toolbar-->
     <div id="accountToolbar" class="btn-group">
         <button type="button" class="btn btn-default" id="save">
@@ -27,7 +27,7 @@
      </div>
 
     <!-- table list-->
-    <table id="accountTable" data-toolbar="#accountToolbar" data-height="550" data-show-toggle="true" data-show-columns="true" data-striped="true"></table>
+    <table id="accountTable" data-toolbar="#accountToolbar" data-height="550" data-show-toggle="true" data-show-columns="false" data-striped="true"></table>
 
     <!-- edit modal-->
     <div id="editAccountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -84,84 +84,82 @@
         $(".close").on('click', function () {
             $("input[type=reset]").trigger("click");
         });
-        dataValidator();
+//        dataValidator();
     });
     //初始化列表数据
-    $('#accountTable').bootstrapTable({
-        pagination: true, //开启分页
-        search: true,
-        pagination:true,
-        showRefresh: true, // 开启刷新功能
-        url: '/account/accountInfo.json',
-        columns: [{
-            field: 'id',
-            title: '主键',
-            sortable: true
-        }, {
-            field: 'appKey',
-            title: 'AppKey'
-        }, {
-            field: 'appSecret',
-            title: 'AppSecret'
-        }, {
-            field: 'name',
-            title: '名称',
-            sortable: true
-        }, {
-            field: 'description',
-            title: '详情描述'
-        }, {
-            field: 'state',
-            title: '是否有效',
-            formatter: function (value, row, index) {
-                if (value == 1)  return '有效';
-                else return '无效';
-            },
-            sortable: true
-        },{
-            field: 'id',
-            title: '编辑/删除',
-            width:'94px',
-            formatter: function (value, row, index) {
-                var str='<a class="edit ml10" href="javascript:void(0)" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>' +
-                        '<a class="remove ml10" href="javascript:void(0)" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
-                return [str].join('');
-
-            },
-            events:window.actionEvents = {
-                'click .edit': function (e, value, row, index) {
-                    $('#editAccountModal').modal('show');
-                    initEditDate(row);
+    $(function(){
+        $('#accountTable').bootstrapTable({
+            pagination: true, //开启分页
+            search: true,
+            showRefresh: true, // 开启刷新功能
+            url: '/account/accountInfo.json',
+            columns: [{
+                field: 'id',
+                title: '主键',
+                sortable: true
+            }, {
+                field: 'appKey',
+                title: 'AppKey'
+            }, {
+                field: 'appSecret',
+                title: 'AppSecret'
+            }, {
+                field: 'name',
+                title: '名称',
+                sortable: true
+            }, {
+                field: 'description',
+                title: '详情描述'
+            }, {
+                field: 'state',
+                title: '是否有效',
+                formatter: function (value, row, index) {
+                    if (value == 1)  return '有效';
+                    else return '无效';
                 },
-                'click .remove': function (e, value, row, index) {
-                    if (confirm("You sure remove it?")) {
-                        $.ajax({
-                            type: "POST",
-                            url:"/account/deleteAccount",
-                            data: {id: row.id},
-                            async: true,
-                            dataType:"json",
-                            success : function(data) {
-                                data = JSON.parse(data);
-                                if (data.resCode == 1) {
-                                    alert("Data Removed Success");
-                                    $('#accountTable').bootstrapTable('refresh');
-                                } else {
-                                    alert("Data Removed Error");
+                sortable: true
+            },{
+                field: 'id',
+                title: '编辑/删除',
+                width:'94px',
+                formatter: function (value, row, index) {
+                    var str='<a class="edit ml10" href="javascript:void(0)" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>' +
+                            '<a class="remove ml10" href="javascript:void(0)" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                    return [str].join('');
+
+                },
+                events:window.actionEvents = {
+                    'click .edit': function (e, value, row, index) {
+                        $('#editAccountModal').modal('show');
+                        initEditDate(row);
+                    },
+                    'click .remove': function (e, value, row, index) {
+                        if (confirm("You sure remove it?")) {
+                            $.ajax({
+                                type: "POST",
+                                url:"/account/deleteAccount",
+                                data: {id: row.id},
+                                async: true,
+                                dataType:"json",
+                                success : function(data) {
+                                    data = JSON.parse(data);
+                                    if (data.resCode == 1) {
+                                        alert("Data Removed Success");
+                                        $('#accountTable').bootstrapTable('refresh');
+                                    } else {
+                                        alert("Data Removed Error");
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }
-        }
-        ]
-    });
+            ]
+        });
 
-    //隐藏部分列
-    $(function(){
         $('#accountTable').bootstrapTable('hideColumn', 'id');
-        $('#accountTable').bootstrapTable('hideColumn', 'description');
+//        $('#accountTable').bootstrapTable('hideColumn', 'description');
     });
     //初始化修改数据
     function initEditDate(row){

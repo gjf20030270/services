@@ -18,7 +18,7 @@
 		<result column="request_param" property="requestParam"/>
 		<result column="third_request_param" property="thirdRequestParam"/>
 		<result column="respon_result" property="responResult"/>
-		<result column="thiry_respon_result" property="thiryResponResult"/>
+		<result column="thiry_respon_result" property="thirdResponResult"/>
 	</resultMap>
 
 	<select id="selectAccess"  resultMap="resultMap">
@@ -37,10 +37,28 @@
 				ad.third_request_param,
 				ad.respon_result,
 		 CONVERT(ad.third_respon_result USING utf8) thiry_respon_result from pt_access a,pt_access_detail ad
-		where a.id=ad.pt_access_id order by a.create_time
-	</select>
-
-	<select id="getTotal"  resultMap="resultMap">
-		select count(channel) id,channel from pt_access GROUP BY channel
+		where a.id=ad.pt_access_id
+		<if test="channel !='' and channel != null">
+			AND a.channel=#{channel}
+		</if>
+		<if test="appKey !='' and appKey != null">
+			AND a.app_key=#{appKey}
+		</if>
+		<if test="busiCode !='' and busiCode != null">
+			AND a.busi_code=#{busiCode}
+		</if>
+		<if test="vendorCode !='' and vendorCode != null">
+			AND a.vendor_code=#{vendorCode}
+		</if>
+		<if test="thirdIdentifyId !='' and thirdIdentifyId != null">
+			AND a.third_identify_id=#{thirdIdentifyId}
+		</if>
+		<if test="callbackTime !='' and callbackTime != null">
+			AND a.callback_time=#{callbackTime}
+		</if>
+		<if test="status !='' and status != null">
+			AND a.status=#{status}
+		</if>
+		order by a.create_time
 	</select>
 </mapper>
