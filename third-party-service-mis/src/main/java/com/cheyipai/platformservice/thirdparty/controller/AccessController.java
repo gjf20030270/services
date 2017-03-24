@@ -41,6 +41,9 @@ public class AccessController {
         aces.setBusiCode(request.getParameter("busiCode"));
         aces.setVendorCode(request.getParameter("vendorCode"));
         aces.setCallbackTime(callTime);
+        String thirdRequest = request.getParameter("thirdRequestParam");
+        if (thirdRequest.equals("1"))thirdRequest=null;
+        aces.setThirdRequestParam(thirdRequest);
         aces.setStatus(request.getParameter("status"));
         List<Access> access = accessService.selectAccess(aces);
         return access;
