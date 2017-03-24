@@ -21,7 +21,7 @@
   </style>
 <body>
 <div class="container" id="vendor">
-    <div style="padding-top: 30px;" >
+    <div style="padding-top: 30px;" ></div>
      <!-- toolbar-->
     <div id="vendorToolbar" class="btn-group">
         <button type="button" class="btn btn-default" id="saveVendor">
