@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="application/javascript">
+    var URL='';
 
     function loadData(url,tabId,tabName){
+        if(url==URL)          return false;
+        URL = url;
         var existsTab = document.getElementById('tab_'+tabId);
         if(existsTab!=null){
             $('#myTab a[href="#tab_'+tabId+'"]').tab('show');
@@ -11,6 +14,10 @@
         $.ajax({
             url:url,
             type:"GET",
+            beforeSend: function () {
+                // 禁用按钮防止重复提交
+                $("#submit").attr({ disabled: "disabled" });
+            },
             success:function(data){
 //                var tab = $('<li class=""><a href="#tab_'+tabId+'" data-toggle="tab">'+tabName+'<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button></a></li>');
                 var tab = $('<li class=""><a href="#tab_'+tabId+'" data-toggle="tab">'+tabName+'</a></li>');
@@ -22,6 +29,9 @@
             }
         });
     }
+
+//    $('#myTab li a[href="#tab_'+tabId+'"]').remove();
+//    $('#tab_'+tabId).remove();
 </script>
 <aside class="main-sidebar">
     <section class="sidebar">
