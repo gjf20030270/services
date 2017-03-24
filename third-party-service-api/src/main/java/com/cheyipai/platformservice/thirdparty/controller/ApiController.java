@@ -6,6 +6,7 @@ import com.cheyipai.platformservice.thirdparty.bean.JuheCityResult;
 import com.cheyipai.platformservice.thirdparty.core.ResultMap;
 import com.cheyipai.platformservice.thirdparty.impl.DictManager;
 import com.cheyipai.platformservice.thirdparty.utils.ExceptionUtil;
+import com.cheyipai.platformservice.thirdparty.utils.SpringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class ApiController extends AbstractController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ApiController.class);
+
+    private DictManager dictManager = SpringUtils.getBean("dictManager");
 
     @RequestMapping(value = "/api/v1", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
@@ -54,8 +57,8 @@ public class ApiController extends AbstractController {
 
         ResultMap success = ResultMap.getResultMap(BusinessStatusEnum.SUCCESS);
         try{
-            DictManager.loadCitys();
-            Map<String,JuheCityResult.JuheCity> juheCityMap = DictManager.getJuheCitys();
+            dictManager.loadCitys();
+            Map<String,JuheCityResult.JuheCity> juheCityMap = dictManager.getJuheCitys();
             success.setData(juheCityMap);
         }catch(Exception e){
             LOG.error(ExceptionUtil.getExceptionTraceInfo(e));

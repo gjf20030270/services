@@ -12,6 +12,7 @@ import com.cheyipai.platformservice.thirdparty.impl.DictManager;
 import com.cheyipai.platformservice.thirdparty.impl.WzThirdPartyService;
 import com.cheyipai.platformservice.thirdparty.utils.ApiUtils;
 import com.cheyipai.platformservice.thirdparty.utils.DBUtil;
+import com.cheyipai.platformservice.thirdparty.utils.SpringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -48,6 +49,8 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
      */
     private static final String HPZL = "02";
 
+    private DictManager dictManager = SpringUtils.getBean("dictManager");
+
     @Override
     public void convertData(String json,ResultMap resultMap) {
 
@@ -78,7 +81,7 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("dtype",DTYPE));
         String city = requestConfigMap.get("city");
-        city = DictManager.getCityCode(city);
+        city = dictManager.getCityCode(city);
         nameValuePairs.add(new BasicNameValuePair("city",city));
         nameValuePairs.add(new BasicNameValuePair("hphm",requestConfigMap.get("hphm")));//号牌号码
         nameValuePairs.add(new BasicNameValuePair("hpzl",HPZL));
@@ -118,5 +121,13 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
             return (!isExpired);
         }
         return false;
+    }
+
+    public DictManager getDictManager() {
+        return dictManager;
+    }
+
+    public void setDictManager(DictManager dictManager) {
+        this.dictManager = dictManager;
     }
 }

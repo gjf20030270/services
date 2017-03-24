@@ -22,17 +22,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DictManager {
 
     private final static Logger LOG = LoggerFactory.getLogger(DictManager.class);
-
-    private static int expired_time = 24 * 60 * 60;
     /**
      * http://v.juhe.cn/wz/citys?key=fcded50227e14b8192f21f14b8c7e6f3
      */
-    private static final String JUHECITYS_URI = "juhecitysUri";
-    private static final String JUHE_KEY = "juheKey";
+    private String juheCitysUri;
+    private String juheKey;
+    private int expiredTime;
+    private final String service_type = "serviceType";
+    private final String code = "code";
+    private final String business_type = "businessType";
 
     private static Map<String,JuheCityResult.JuheCity> juheCitys = new ConcurrentHashMap<>();
 
-    static{
+    public void init(){
         try {
             loadCitys();
         } catch (Exception e) {
@@ -40,7 +42,7 @@ public class DictManager {
         }
     }
 
-    public static String getCityCode(String cityName){
+    public String getCityCode(String cityName){
         if(StringUtils.isBlank(cityName)){
             return "";
         }
@@ -50,7 +52,7 @@ public class DictManager {
         }
         return "";
     }
-    public static void loadCitys(){
+    public void loadCitys(){
         DictDb dict = selectWzCity();
         if(dict!=null){
             Date updateTime = dict.getUpdateTime();
@@ -58,7 +60,7 @@ public class DictManager {
                 updateTime = dict.getCreateTime();
             }
             if(updateTime!=null){
-                boolean isExpired = ApiUtils.isExpiredTimeSecond(updateTime.getTime(),expired_time);
+                boolean isExpired = ApiUtils.isExpiredTimeSecond(updateTime.getTime(),expiredTime);
                 if(!isExpired){
                     String content = null;
                     byte[] data = dict.getData();
@@ -80,7 +82,7 @@ public class DictManager {
             LOG.error(ExceptionUtil.getExceptionTraceInfo(e));
         }
     }
-    private static void initCitys() throws Exception {
+    private void initCitys() throws Exception {
         String juhecitysUri = getJuheCitysUri();
         CustomHttpClient client = HttpClientFactory.customHttpClient();
         HttpUriRequest request = client.buildHttpUriRequest(juhecitysUri, "GET", null, 1000);
@@ -89,14 +91,12 @@ public class DictManager {
         saveOrUpdate(content);
     }
 
-    private static String getJuheCitysUri() {
-        String juhecitysUri = PropertiesUtil.getString(JUHECITYS_URI);
-        String key = PropertiesUtil.getString(JUHE_KEY);
-        juhecitysUri = juhecitysUri.trim() + "?key="+key;
-        return juhecitysUri;
+    private String getJuheCitysUri() {
+        String url =  juheCitysUri.trim() + "?key="+juheKey;
+        return url;
     }
 
-    private static int saveOrUpdate(String content){
+    private int saveOrUpdate(String content){
         if(StringUtils.isBlank(content)){
             content = "";
         }
@@ -109,14 +109,14 @@ public class DictManager {
             return updateWzCity(dict);
         }
     }
-    private static int updateWzCity(DictDb dict){
+    private int updateWzCity(DictDb dict){
         return DBUtil.getInstance().updateDict(dict);
     }
-    private static DictDb selectWzCity(){
+    private DictDb selectWzCity(){
         Map<String,String> queryParam = new HashMap<>();
-        queryParam.put("serviceType", Constants.THIRD_PARTY_SERVICE_TYPE_WZ);
-        queryParam.put("code",Constants.SERVICE_VENDOR_JUHE);
-        queryParam.put("businessType",Constants.JUHE_BUSINESS_TYPE_CITY);
+        queryParam.put(service_type, Constants.THIRD_PARTY_SERVICE_TYPE_WZ);
+        queryParam.put(code,Constants.SERVICE_VENDOR_JUHE);
+        queryParam.put(business_type,Constants.JUHE_BUSINESS_TYPE_CITY);
         List<DictDb> dictDbs = DBUtil.getInstance().getDicts(queryParam);
         DictDb dict = null;
         if(dictDbs.size()>0){
@@ -124,7 +124,7 @@ public class DictManager {
         }
         return dict;
     }
-    private static int saveWzCity(String content){
+    private int saveWzCity(String content){
         DictDb dict = new DictDb();
         dict.setServiceType( Constants.THIRD_PARTY_SERVICE_TYPE_WZ);
         dict.setBusinessType( Constants.JUHE_BUSINESS_TYPE_CITY);
@@ -136,7 +136,7 @@ public class DictManager {
         return DBUtil.getInstance().addDict(dict);
     }
 
-    private static void parseJuheCitys(String content){
+    private void parseJuheCitys(String content){
         if(StringUtils.isBlank(content)){
             return;
         }
@@ -153,8 +153,27 @@ public class DictManager {
             }
         }
     }
-    public static Map<String,JuheCityResult.JuheCity> getJuheCitys(){
+    public Map<String,JuheCityResult.JuheCity> getJuheCitys(){
         return juheCitys;
     }
 
+    public String getJuheKey() {
+        return juheKey;
+    }
+
+    public void setJuheKey(String juheKey) {
+        this.juheKey = juheKey;
+    }
+
+    public void setJuheCitysUri(String juheCitysUri) {
+        this.juheCitysUri = juheCitysUri;
+    }
+
+    public int getExpiredTime() {
+        return expiredTime;
+    }
+
+    public void setExpiredTime(int expiredTime) {
+        this.expiredTime = expiredTime;
+    }
 }

@@ -25,10 +25,10 @@ public class ApiControllerTest extends BaseBeanTest{
     public void testApi() throws Exception{
         List<NameValuePair> params = new ArrayList<>();
         long timeStamp = System.currentTimeMillis();
-        String appKey = "2";
-        String appSecret = "33";
-        String channel = "pc";
-        String businessCode = "query";
+        String appKey = "1fb6e774cb2346ef8bc991994cfe26be";
+        String appSecret = "41f3fc129c9e0bb1c3aa4a0147712ca9";
+        String channel = "PC";
+        String businessCode = "busiCode1";
 
         params.add(new BasicNameValuePair("service_type","WZ"));
         params.add(new BasicNameValuePair("city","廊坊"));

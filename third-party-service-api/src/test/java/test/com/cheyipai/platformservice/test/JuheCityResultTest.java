@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.cheyipai.platformservice.thirdparty.bean.JuheCityResult;
 import com.cheyipai.platformservice.thirdparty.impl.DictManager;
+import com.cheyipai.platformservice.thirdparty.utils.SpringUtils;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -51,8 +52,9 @@ public class JuheCityResultTest extends BaseBeanTest{
     }
     @Test
     public void testGetCityCode(){
+        DictManager dictManager = SpringUtils.getBean("dictManager");
         String cityname = "淄博";
-        String cityCode = DictManager.getCityCode(cityname);
+        String cityCode = dictManager.getCityCode(cityname);
         System.out.println(cityCode);
     }
 

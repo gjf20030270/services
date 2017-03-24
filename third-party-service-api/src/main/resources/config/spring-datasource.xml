@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util.xsd"
-       default-autowire="byName">
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <util:properties id="properties" location="classpath:config/jdbc.properties"/>
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="initialSize" value="2"/>
         <property name="minIdle" value="5"/>
@@ -20,10 +15,10 @@
         <property name="removeAbandonedTimeout" value="180"/>
         <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
         <property name="minEvictableIdleTimeMillis" value="3600000"/>
-        <property name="driverClassName" value="#{properties['jdbc.driver']}"/>
-        <property name="url" value="#{properties['jdbc.read.url']}"/>
-        <property name="username" value="#{properties['jdbc.read.username']}"/>
-        <property name="password" value="#{properties['jdbc.read.password']}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.read.url}"/>
+        <property name="username" value="${jdbc.read.username}"/>
+        <property name="password" value="${jdbc.read.password}"/>
         <property name="defaultAutoCommit" value="true"/>
     </bean>
 
