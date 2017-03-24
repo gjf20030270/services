@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
 
     <!-- dev -->
+    <!-- remote dev -->
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
