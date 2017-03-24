@@ -7,8 +7,6 @@
     <version>0.0.1</version>
     <packaging>pom</packaging>
     
-    
-    <!-- remote master -->
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
