@@ -5,7 +5,7 @@
     function loadData(url,tabId,tabName){
         var existsTab = document.getElementById('tab_'+tabId);
         if(existsTab!=null){
-            $('#myTab a[href="#tab_'+tabId+'"]').tab('show')
+            $('#myTab a[href="#tab_'+tabId+'"]').tab('show');
             return;
         }
         $.ajax({
@@ -22,10 +22,6 @@
             }
         });
     }
-//    function remove(tabId){
-//        $('#tab_'+tabId+'').tab('hide');
-//
-//    }
 </script>
 <aside class="main-sidebar">
     <section class="sidebar">
