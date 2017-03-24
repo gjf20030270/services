@@ -21,7 +21,7 @@
     <div style="padding-top: 30px;" ></div>
      <!-- toolbar-->
     <div id="accountToolbar" class="btn-group">
-        <button type="button" class="btn btn-default" id="save">
+        <button type="button" class="btn btn-default" id="saveAccount">
                 <i class="glyphicon glyphicon-plus"></i>
         </button>
      </div>
@@ -37,10 +37,10 @@
                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">账户授权</h4>
                 </div>
-                <div class="modal-body" id="editBody">
+                <div class="modal-body">
                     <form id="saveAccountForm" class="form-horizontal" role="form">
                             <table class="table table-striped table-bordered table-hover">
-                                <tr><input id="id" name="id" value="-1" hidden>
+                                <tr><div ><input id="id" name="id" value="-1" hidden></div>
                                     <td>业务编码</td>
                                     <td><input id="busiCode" name="busiCode" type="text"></td>
                                     <td>调用渠道</td>
@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <input type="reset" name="reset" style="display: none;" />
-                                    <button type="submit" class="btn btn-primary" onclick="saveData();">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveData();">Save</button>
                                     <button type="button" id="cancel" class="btn btn-default" data-dismiss="modal" >Cancel</button>
                                     </div>
                             </div>
@@ -74,7 +74,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#save").on('click', function () {
+        $("#saveAccount").on('click', function () {
             $("#editAccountModal").modal('show');
             $($("[name='state']")[0]).prop("checked","checked");
         });
@@ -86,82 +86,84 @@
             $("input[type=reset]").trigger("click");
             $($("[name='state']")).prop("checked","false");
         });
-//        dataValidator();
     });
     //初始化列表数据
-    $(function(){
-        $('#accountTable').bootstrapTable({
-            pagination: true, //开启分页
-            search: true,
-            showRefresh: true, // 开启刷新功能
-            url: '/account/accountInfo.json',
-            columns: [{
-                field: 'id',
-                title: '主键',
-                sortable: true
-            }, {
-                field: 'appKey',
-                title: 'AppKey'
-            }, {
-                field: 'appSecret',
-                title: 'AppSecret'
-            }, {
-                field: 'name',
-                title: '名称',
-                sortable: true
-            }, {
-                field: 'description',
-                title: '详情描述'
-            }, {
-                field: 'state',
-                title: '是否有效',
-                formatter: function (value, row, index) {
-                    if (value == 1)  return '有效';
-                    else return '无效';
-                },
-                sortable: true
-            },{
-                field: 'id',
-                title: '编辑/删除',
-                width:'94px',
-                formatter: function (value, row, index) {
-                    var str='<a class="edit ml10" href="javascript:void(0)" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>' +
-                            '<a class="remove ml10" href="javascript:void(0)" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
-                    return [str].join('');
+    $('#accountTable').bootstrapTable({
+        search: true,
+        pagination: true, //开启分页
+        showRefresh: true, // 开启刷新功能
+        url: '/account/accountInfo.json',
+        columns: [{
+            field: 'id',
+            title: '主键',
+            sortable: true
+        }, {
+            field: 'appKey',
+            title: 'AppKey'
+        }, {
+            field: 'appSecret',
+            title: 'AppSecret'
+        }, {
+            field: 'busiCode',
+            title: '业务编码'
+        },{
+            field: 'channel',
+            title: '业务渠道'
+        },{
+            field: 'name',
+            title: '名称',
+            sortable: true
+        }, {
+            field: 'description',
+            title: '详情描述'
+        }, {
+            field: 'state',
+            title: '是否有效',
+            formatter: function (value, row, index) {
+                if (value == 1)  return '有效';
+                else return '无效';
+            },
+            sortable: true
+        },{
+            field: 'id',
+            title: '编辑/删除',
+            width:'94px',
+            formatter: function (value, row, index) {
+                var str='<a class="edit ml10" href="javascript:void(0)" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>' +
+                        '<a class="remove ml10" href="javascript:void(0)" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                return [str].join('');
 
+            },
+            events:window.actionEvents = {
+                'click .edit': function (e, value, row, index) {
+                    $('#editAccountModal').modal('show');
+                    initEditDate(row);
                 },
-                events:window.actionEvents = {
-                    'click .edit': function (e, value, row, index) {
-                        $('#editAccountModal').modal('show');
-                        initEditDate(row);
-                    },
-                    'click .remove': function (e, value, row, index) {
-                        if (confirm("You sure remove it?")) {
-                            $.ajax({
-                                type: "POST",
-                                url:"/account/deleteAccount",
-                                data: {id: row.id},
-                                async: true,
-                                dataType:"json",
-                                success : function(data) {
-                                    data = JSON.parse(data);
-                                    if (data.resCode == 1) {
-                                        alert("Data Removed Success");
-                                        $('#accountTable').bootstrapTable('refresh');
-                                    } else {
-                                        alert("Data Removed Error");
-                                    }
+                'click .remove': function (e, value, row, index) {
+                    if (confirm("You sure remove it?")) {
+                        $.ajax({
+                            type: "POST",
+                            url:"/account/deleteAccount",
+                            data: {id: row.id},
+                            async: true,
+                            dataType:"json",
+                            success : function(data) {
+                                data = JSON.parse(data);
+                                if (data.resCode == 1) {
+                                    alert("Data Removed Success");
+                                    $('#accountTable').bootstrapTable('refresh');
+                                } else {
+                                    alert("Data Removed Error");
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 }
             }
-            ]
-        });
-
+        }]
+    });
+    $(function(){
         $('#accountTable').bootstrapTable('hideColumn', 'id');
-//        $('#accountTable').bootstrapTable('hideColumn', 'description');
     });
     //初始化修改数据
     function initEditDate(row){
@@ -197,37 +199,37 @@
     }
 
 
-    function dataValidator(){
-        $('#saveAccountForm').bootstrapValidator({
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                appSecret: {
-                    validators: {
-                        notEmpty: {
-                            message: '用户名不能为空'
-                        }//,
-//                        stringLength: {
-//                            min: 6,
-//                            max: 18,
-//                            message: '用户名长度必须在6到18位之间'
-//                        },
-//                        regexp: {
-//                            regexp: /^[a-zA-Z0-9_]+$/,
-//                            message: '用户名只能包含大写、小写、数字和下划线'
-//                        }
-                    }
-                }
-            },
-            submitHandler: function(validator, form, submitButton) {
-                alert("submit");
-            }
-        });
-    }
+//    function dataValidator(){
+//        $('#saveAccountForm').bootstrapValidator({
+//            message: 'This value is not valid',
+//            feedbackIcons: {
+//                valid: 'glyphicon glyphicon-ok',
+//                invalid: 'glyphicon glyphicon-remove',
+//                validating: 'glyphicon glyphicon-refresh'
+//            },
+//            fields: {
+//                appSecret: {
+//                    validators: {
+//                        notEmpty: {
+//                            message: '用户名不能为空'
+//                        }//,
+////                        stringLength: {
+////                            min: 6,
+////                            max: 18,
+////                            message: '用户名长度必须在6到18位之间'
+////                        },
+////                        regexp: {
+////                            regexp: /^[a-zA-Z0-9_]+$/,
+////                            message: '用户名只能包含大写、小写、数字和下划线'
+////                        }
+//                    }
+//                }
+//            },
+//            submitHandler: function(validator, form, submitButton) {
+//                alert("submit");
+//            }
+//        });
+//    }
 </script>
 </body>
 </html>
