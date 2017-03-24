@@ -6,7 +6,6 @@
     <title>access</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@ include file="include/static.jsp"%>
-    <%--<script type="text/javascript" src="/static/js/total.js" charset="utf-8"></script>--%>
 </head>
 <body>
 <div class="container" id="access">
