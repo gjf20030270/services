@@ -59,6 +59,9 @@
 		<if test="status !='' and status != null">
 			AND a.status=#{status}
 		</if>
+		<if test="thirdRequestParam !='' and thirdRequestParam != null ">
+			and (ad.third_request_param is not null and ad.third_request_param != '')
+		</if>
 		order by a.create_time
 	</select>
 </mapper>
