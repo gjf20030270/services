@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
 * Created by miqi on 2017/3/7.
@@ -21,21 +18,8 @@ public class AccessService {
     @Resource
     private AccessMapper accessMapper;
 
-    public List<Access> selectAccess(){
-        List<Access> access= accessMapper.selectAccess();
+    public List<Access> selectAccess(Access aces){
+        List<Access> access= accessMapper.selectAccess(aces);
         return access;
-    }
-
-    public List<Access> getTotal(){
-        List<Access> access= accessMapper.getTotal();
-        List list = new ArrayList();
-        Map map = null;
-        for (Access a:access){
-            map = new HashMap();
-            map.put("total",a.getId());
-            map.put("canal",a.getChannel());
-            list.add(map);
-        }
-        return list;
     }
 }

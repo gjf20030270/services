@@ -22,8 +22,8 @@ public class Vendor {
     private Integer level;
     private String serviceStartTime;
     private String serviceStopTime;
-    private Date createTime;
-    private Date updateTime;
+    private String createTime;
+    private String updateTime;
     private String companyPhone;
     private String contactsPhone;
     private String contactsName;
@@ -156,19 +156,19 @@ public class Vendor {
         this.serviceStopTime = serviceStopTime;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
