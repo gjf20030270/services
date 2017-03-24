@@ -40,7 +40,7 @@
                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">供应商信息维护</h4>
                 </div>
-                <div class="modal-body" id="editBody">
+                <div class="modal-body">
                     <form id="saveVendorForm" class="form-horizontal" role="form">
                         <table class="table table-striped table-bordered table-hover">
                             <tr><div ><input type="text" id="id" name="id" hidden="hidden" value="-1"></div>
@@ -74,7 +74,7 @@
                                                         <span class="add-on"><i class="icon-calendar"></i></span>
                                                     </div>
                                                 </td>
-                                <td>数据是否有效</td><td><input id="stateY" name="status" type="radio" value="1"/> 启用
+                                <td>数据是否有效</td><td><input id="stateY" name="status" type="radio" value="1" checked/> 启用
                                                         <input id="stateN" name="status" type="radio" value="0"/> 停用</td>
                             </tr>
                             <tr><td>服务商联系人电话</td><td><input type="text" id="contactsPhone" name="contactsPhone" value=""/></td>
@@ -132,7 +132,6 @@
     });
     //初始化列表数据
     $('#vendorTable').bootstrapTable({
-        pagination: true, //开启分页
         search: true,
         pagination:true,
         showRefresh: true, // 开启刷新功能
@@ -278,21 +277,6 @@
     //隐藏部分列
     $(function(){
         $('#vendorTable').bootstrapTable('hideColumn', 'id');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'reqparamMap');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'requestUrl');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'createTime');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'updateTime');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'requestTimeOut');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'companyPhone');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'contactsPhone');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'notifyType');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'callbackUrl');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'companyPhone');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'contactsPhone');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'remark');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'serviceStartTime');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'serviceStopTime');
-//        $('#vendorTable').bootstrapTable('hideColumn', 'cacheTime');
     });
     //初始化修改数据
     function initEditDate(row){
@@ -349,35 +333,35 @@
     }
 
 
-    function dataValidator(){
-        $('#saveVendorForm').bootstrapValidator({
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    message: '用户名验证失败',
-                    validators: {
-                        notEmpty: {
-                            message: '用户名不能为空'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 18,
-                            message: '用户名长度必须在6到18位之间'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_]+$/,
-                            message: '用户名只能包含大写、小写、数字和下划线'
-                        }
-                    }
-                }
-             }
-        });
-    }
+//    function dataValidator(){
+//        $('#saveVendorForm').bootstrapValidator({
+//            message: 'This value is not valid',
+//            feedbackIcons: {
+//                valid: 'glyphicon glyphicon-ok',
+//                invalid: 'glyphicon glyphicon-remove',
+//                validating: 'glyphicon glyphicon-refresh'
+//            },
+//            fields: {
+//                name: {
+//                    message: '用户名验证失败',
+//                    validators: {
+//                        notEmpty: {
+//                            message: '用户名不能为空'
+//                        },
+//                        stringLength: {
+//                            min: 6,
+//                            max: 18,
+//                            message: '用户名长度必须在6到18位之间'
+//                        },
+//                        regexp: {
+//                            regexp: /^[a-zA-Z0-9_]+$/,
+//                            message: '用户名只能包含大写、小写、数字和下划线'
+//                        }
+//                    }
+//                }
+//             }
+//        });
+//    }
 </script>
 </body>
 </html>
