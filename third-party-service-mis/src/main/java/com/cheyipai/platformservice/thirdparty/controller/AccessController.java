@@ -2,10 +2,7 @@ package com.cheyipai.platformservice.thirdparty.controller;
 
 import com.cheyipai.platformservice.thirdparty.bean.Access;
 import com.cheyipai.platformservice.thirdparty.commons.constants.ApiUrls;
-import com.cheyipai.platformservice.thirdparty.commons.constants.BusinessStatusEnum;
-import com.cheyipai.platformservice.thirdparty.core.ResultMap;
 import com.cheyipai.platformservice.thirdparty.service.AccessService;
-import com.cheyipai.platformservice.thirdparty.utils.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -31,20 +30,22 @@ public class AccessController {
     public String selectAccess(){
         return "access";
     }
-    @ResponseBody
-    @RequestMapping(value = "/accessInfo.json")
-    public Object accountInfoJson(){
-        List<Access> access = accessService.selectAccess();
-        return access;
-    }
 
     @ResponseBody
-    @RequestMapping(value = "/accesstotal.json",method = {RequestMethod.GET, RequestMethod.POST})
-    public String getAccessTotal(){
-        List<Access> access = accessService.getTotal();
-        ResultMap resultMap = new ResultMap(BusinessStatusEnum.SUCCESS);
-        resultMap.setData(access);
-        JsonMapper jm = JsonMapper.buildNormalBinder();
-        return jm.toJson(resultMap);
+    @RequestMapping(value = "/accessInfo.json",method = {RequestMethod.GET, RequestMethod.POST})
+    public Object accountInfoJson(HttpServletRequest request,HttpServletResponse response){
+        String callTime = request.getParameter("callbackTime");
+        Access aces = new Access();
+        aces.setChannel(request.getParameter("channel"));
+        aces.setAppKey(request.getParameter("appKey"));
+        aces.setBusiCode(request.getParameter("busiCode"));
+        aces.setVendorCode(request.getParameter("vendorCode"));
+        aces.setCallbackTime(callTime);
+        String thirdRequest = request.getParameter("thirdRequestParam");
+        if (thirdRequest.equals("1"))thirdRequest=null;
+        aces.setThirdRequestParam(thirdRequest);
+        aces.setStatus(request.getParameter("status"));
+        List<Access> access = accessService.selectAccess(aces);
+        return access;
     }
 }

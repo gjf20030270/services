@@ -52,20 +52,29 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         ProcessResult result = ProcessResult.STOP;
         String thirdResponse = null;
         String thirdRequest = null;
+        List<NameValuePair> nameValuePairs = null;
+
         long execTime = 0;
         //1
         String identifyCode = getIdenfyCode(requestConfigMap);
+
         if (isExists(identifyCode)) {
             assembleResultMap(identifyCode,ret);
         } else {
             try {
                 StopWatch stopWatch = new StopWatch();
                 stopWatch.start();
+
+                nameValuePairs = buildHttpUriRequestParam(getRequestServiceConfig(), requestConfigMap);
+
                 HttpUriRequest httpUriRequest = buildHttpUriRequest(getRequestServiceConfig(),
-                        requestConfigMap);
+                        requestConfigMap, nameValuePairs);
+
                 CustomHttpClient.HttpResult httpResult = HttpClientFactory.customHttpClient().
                         sendRequestGetEntityBytes(httpUriRequest);
-                thirdRequest = buildThirdParam(requestConfigMap);
+
+                thirdRequest = getThirdPartyRequestParam(nameValuePairs);
+
                 thirdResponse = httpResult.getContent();
                 stopWatch.stop();
                 execTime = stopWatch.getTime();
@@ -105,14 +114,14 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         return doSaveAccessDetailDb(reqParamJson,thirdParamJson,accessDb.getId(), thirdResponse, ret);
     }
 
-    private String buildThirdParam(Map<String,String> requestMap){
-        List<NameValuePair> thirdParamList = buildHttpUriRequestParam(this.getRequestServiceConfig(),requestMap);
+    private String getThirdPartyRequestParam(List<NameValuePair> thirdParamList){
         Map<String,String> thirdParamMap = new HashMap<>();
         for(NameValuePair pair : thirdParamList ){
             thirdParamMap.put(pair.getName(),pair.getValue());
         }
         return JSON.toJSONString(thirdParamMap);
     }
+
     @Override
     public String toString() {
         return this.getRequestServiceConfig().toString();
@@ -133,6 +142,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         DBUtil.getInstance().addAccess(accessDb);
         return accessDb;
     }
+
     protected String buildIdentifyCode(Map<String, String> requestConfigMap){
         String identify;
         Map<String, String> m = requestConfigMap;
@@ -166,6 +176,7 @@ public abstract class WzThirdPartyService extends AbstractThirdPartyService {
         }
         return idCode;
     }
+
     private void assembleResultMap(String identifyCode ,ResultMap resultMap){
         resultMap.setResultCode(BusinessStatusEnum.SUCCESS.getResultCode());
         resultMap.setStateDescription(BusinessStatusEnum.SUCCESS.getStateDescription());

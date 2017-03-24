@@ -92,8 +92,6 @@ public class JhWzThirdPartyService extends WzThirdPartyService {
     }
 
     /**
-     * 自定义报文格式转换
-     *
      * @param requestConfigMap
      * @param ret
      */

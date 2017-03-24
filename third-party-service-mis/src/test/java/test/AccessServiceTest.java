@@ -17,7 +17,7 @@ public class AccessServiceTest extends BaseBeanTest{
 
     @Test
     public void testSelectAccess() {
-        List<Access> accessList = accessService.selectAccess();
+        List<Access> accessList = accessService.selectAccess(new Access());
         for (Access a : accessList) {
             System.out.printf("id=%s,channel=%s,appKey=%s,busiCode=%s \n" +
                             ",identifyCode=%s,thirdIdentifyId=%s,createTime=%s,updateTime=%s \n"+

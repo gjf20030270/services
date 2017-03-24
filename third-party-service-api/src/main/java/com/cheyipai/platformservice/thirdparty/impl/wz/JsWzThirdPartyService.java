@@ -35,4 +35,9 @@ public class JsWzThirdPartyService extends WzThirdPartyService{
     public ProcessResult excuteService(Map<String, String> requestConfigMap, ResultMap ret) {
         return super.excuteService(requestConfigMap, ret);
     }
+
+    @Override
+    public boolean isExists(String key) {
+        return false;
+    }
 }

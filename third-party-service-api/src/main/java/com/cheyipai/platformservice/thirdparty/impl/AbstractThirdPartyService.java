@@ -65,12 +65,21 @@ public abstract class AbstractThirdPartyService implements ThirdPartyService {
     public abstract List<NameValuePair> buildHttpUriRequestParam(
             RequestServiceConfig requestServiceConfig, Map<String, String> requestConfigMap);
 
+
     public HttpUriRequest buildHttpUriRequest(RequestServiceConfig requestServiceConfig,
                                               Map<String, String> requestConfigMap)
             throws URISyntaxException, IllegalAccessException {
-        String httpMethod = requestServiceConfig.getRequestMethod();
+        return buildHttpUriRequest(requestServiceConfig, requestConfigMap, null);
 
-        List<NameValuePair> params = buildHttpUriRequestParam(requestServiceConfig, requestConfigMap);
+    }
+
+    public HttpUriRequest buildHttpUriRequest(RequestServiceConfig requestServiceConfig,
+                                              Map<String, String> requestConfigMap, List<NameValuePair> params)
+            throws URISyntaxException, IllegalAccessException {
+        String httpMethod = requestServiceConfig.getRequestMethod();
+        if (null == params) {
+            params = buildHttpUriRequestParam(requestServiceConfig, requestConfigMap);
+        }
 
         URI uri = null;
         String integratedUrl = ThirdPartyServiceUtil.checkRequstUrl(requestServiceConfig.getRequestUrl());
@@ -138,11 +147,6 @@ public abstract class AbstractThirdPartyService implements ThirdPartyService {
                 break;
         }
         return requestBase;
-    }
-
-    @Override
-    public boolean isExists(String key) {
-        return false;
     }
 
     @Override

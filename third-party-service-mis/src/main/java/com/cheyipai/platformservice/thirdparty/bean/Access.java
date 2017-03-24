@@ -15,7 +15,7 @@ public class Access {
     private String thirdIdentifyId;//第三方回调唯一标志
     private Date createTime;
     private Date updateTime;
-    private Date callbackTime;//'回调时间'
+    private String callbackTime;//'回调时间'
     private String status;//状态 1 有效 0 无效',
 
     private String requestParam;//'请求参数json创建'
@@ -95,11 +95,11 @@ public class Access {
         this.updateTime = updateTime;
     }
 
-    public Date getCallbackTime() {
+    public String getCallbackTime() {
         return callbackTime;
     }
 
-    public void setCallbackTime(Date callbackTime) {
+    public void setCallbackTime(String callbackTime) {
         this.callbackTime = callbackTime;
     }
 
