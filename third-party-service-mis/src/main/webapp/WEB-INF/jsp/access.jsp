@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container" id="access">
-    <div style="padding-top: 30px;" >
+    <div style="padding-top: 30px;" ></div>
     <table id="query"class="table table-striped table-bordered table-hover" align="center">
         <tr> <td>访问渠道：</td><td><input id="channel" type="text" /></td>
             <td>appKey：</td><td COLSPAN="3"><input id="appKey" type="text" style="width: 100%;"/></td>
@@ -22,11 +22,14 @@
         </tr>
         <tr>
             <td>回调时间：</td><td><input id="callbackTime" name="callbackTime" type="text" /></td>
-            <td>调用否有效:</td>
-            <td colspan="2"><input id="statusY" name="status" type="radio" value=1 /> 有效
+            <td>调用否有效：</td>
+            <td><input id="statusY" name="status" type="radio" value=1 checked/> 有效
                 <input id="statusN" name="status" type="radio" value=0 /> 无效</td>
-            <td ><button id="search" type="button" style="padding-right: -1px;">查询</button></td>
+            <td>数据请求：</td>
+            <td><input id="all" name="thirdRequest" type="radio" value=1 checked/> 全部请求
+                <input id="third" name="thirdRequest" type="radio" value=0 /> 第三方请求</td>
         </tr>
+        <tr><td colspan="6" align="right"><button id="search" type="button">查询</button></td></tr>
     </table>
     <!-- table list-->
     <div style="padding-top: 30px;" >
@@ -60,6 +63,7 @@
                     busiCode: $("#busiCode").val(),
                     vendorCode: $("#vendorCode").val(),
                     callbackTime: $("#callbackTime").val(),
+                    thirdRequestParam:$('input:radio[name="thirdRequest"]:checked').val(),
 //                    maxrows: params.limit,
 //                    pageindex: params.pageNumber,
                     status: $('input:radio[name="status"]:checked').val()

@@ -18,7 +18,7 @@
   </style>
 <body>
 <div class="container" id="account">
-    <div style="padding-top: 30px;" >
+    <div style="padding-top: 30px;" ></div>
      <!-- toolbar-->
     <div id="accountToolbar" class="btn-group">
         <button type="button" class="btn btn-default" id="save">
@@ -80,9 +80,11 @@
         });
         $("#cancel").on('click', function () {
             $("input[type=reset]").trigger("click");
+            $($("[name='state']")).prop("checked","false");
         });
         $(".close").on('click', function () {
             $("input[type=reset]").trigger("click");
+            $($("[name='state']")).prop("checked","false");
         });
 //        dataValidator();
     });
@@ -172,7 +174,6 @@
     }
 
     function saveData(){
-        return;
         $.ajax({
             cache: true,
             type: "POST",
