@@ -215,6 +215,11 @@
                 <version>${mybatis-spring.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${codehaus.jackson.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
                 <version>${jackson.version}</version>
@@ -329,6 +334,7 @@
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
         <jedis.version>2.1.0</jedis.version>
         <jackson.version>2.2.3</jackson.version>
+        <codehaus.jackson.version>1.9.6</codehaus.jackson.version>
         <!-- extends dependency-->
         <jstl.version>1.2</jstl.version>
         <httpasyncclient.version>4.0.2</httpasyncclient.version>
