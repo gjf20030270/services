@@ -361,6 +361,23 @@
         <!-- nexus.url -->
         <nexus.url>http://192.168.104.104:8081/nexus/</nexus.url>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>public</name>
+            <url>http://192.168.104.104:8081/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>public</name>
+            <url>http://192.168.104.104:8081/nexus/content/groups/public</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <distributionManagement>
         <repository>
             <id>releases</id>
