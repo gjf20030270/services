@@ -33,7 +33,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(method= RequestMethod.POST)
+    @RequestMapping(method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Map login(HttpServletRequest request,String username,String password,String captcha){
 
