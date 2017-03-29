@@ -40,6 +40,7 @@ public class AccessController {
         aces.setAppKey(request.getParameter("appKey"));
         aces.setBusiCode(request.getParameter("busiCode"));
         aces.setVendorCode(request.getParameter("vendorCode"));
+        aces.setIdentifyCode(request.getParameter("identifyCode"));
         aces.setCallbackTime(callTime);
         String thirdRequest = request.getParameter("thirdRequestParam");
         if (thirdRequest.equals("1"))thirdRequest=null;
