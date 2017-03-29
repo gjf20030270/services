@@ -44,6 +44,9 @@
 		<if test="appKey !='' and appKey != null">
 			AND a.app_key=#{appKey}
 		</if>
+		<if test="identifyCode !='' and identifyCode != null">
+			AND a.identify_code=#{identifyCode}
+		</if>
 		<if test="busiCode !='' and busiCode != null">
 			AND a.busi_code=#{busiCode}
 		</if>

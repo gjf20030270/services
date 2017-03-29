@@ -15,12 +15,19 @@
             <td>appKey：</td><td COLSPAN="3"><input id="appKey" type="text" style="width: 100%;" value=""/></td>
         </tr>
         <tr>
-            <td>业务代码：</td><td><input id="busiCode" name="customerName4" type="text" value=""/></td>
-            <td>服务商编码：</td><td><input id="vendorCode" name="customerName4" type="text" value=""/></td>
-            <td>服务唯一码：</td><td><input id="identifyCode" name="identifyCode" type="text" value=""/></td>
+            <td>业务代码：</td><td><input id="busiCode" type="text" value=""/></td>
+            <td>服务商编码：</td><td><input id="vendorCode" type="text" value=""/></td>
+            <td>服务唯一码：</td><td><input id="identifyCode"  type="text" value=""/></td>
         </tr>
         <tr>
-            <td>回调时间：</td><td><input id="callbackTime" name="callbackTime" type="text" value=""/></td>
+            <td>回调时间：</td><td>
+            <div class="input-append date form_datetime" >
+                <input readonly size="16" type="text" id="callbackTime" value=""/>
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-calendar"></i></span>
+            </div>
+
+            <%--<input id="callbackTime"  type="text" value=""/></td>--%>
             <td>调用否有效：</td>
             <td><input id="statusY" name="status" type="radio" value=1 checked/> 有效
                 <input id="statusN" name="status" type="radio" value=0 /> 无效</td>
@@ -61,6 +68,7 @@
                     appKey: $("#appKey").val(),
                     busiCode: $("#busiCode").val(),
                     vendorCode: $("#vendorCode").val(),
+                    identifyCode: $("#identifyCode").val(),
                     callbackTime: $("#callbackTime").val(),
                     thirdRequestParam:$('input:radio[name="thirdRequest"]:checked').val(),
 //                    maxrows: params.limit,
